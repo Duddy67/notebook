@@ -3,7 +3,7 @@
  
     <name>com_notebook</name>
     <!-- The following elements are optional and free of formatting contraints -->
-    <creationDate>November 2016</creationDate>
+    <creationDate>November 2017</creationDate>
     <author>Lucas Sanner</author>
     <authorEmail>lucas.sanner@codalia.net</authorEmail>
     <authorUrl>http://www.codalia.net</authorUrl>
@@ -42,7 +42,6 @@
 	    <folder>controllers</folder>
 	    <folder>css</folder>
 	    <folder>helpers</folder>
-	    <folder>js</folder>
 	    <folder>language</folder>
 	    <folder>layouts</folder>
 	    <folder>models</folder>
@@ -82,7 +81,6 @@
 		    <!-- Folders  Section -->
 		    <folder>controllers</folder>
 		    <folder>helpers</folder>
-		    <folder>js</folder>
 		    <folder>language</folder>
 		    <folder>layouts</folder>
 		    <folder>models</folder>
