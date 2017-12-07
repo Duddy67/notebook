@@ -112,7 +112,7 @@ echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this))
       $canEdit = $user->authorise('core.edit','com_notebook.note.'.$item->id);
       $canEditOwn = $user->authorise('core.edit.own', 'com_notebook.note.'.$item->id) && $item->created_by == $userId;
       $canCheckin = $user->authorise('core.manage','com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
-      $canChange = ($user->authorise('core.edit.state','com_notebook.note.'.$item->id) && $canCheckin) || $canEditOwn; 
+      $canChange = ($user->authorise('core.edit.state','com_notebook.note.'.$item->id) && $canCheckin); 
       ?>
 
       <tr class="row<?php echo $i % 2; ?>" sortable-group-id="<?php echo $item->catid; ?>">
@@ -142,15 +142,17 @@ echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this))
 	    <div class="btn-group">
 	      <?php echo JHtml::_('jgrid.published', $item->published, $i, 'notes.', $canChange, 'cb'); ?>
 	      <?php
-	      // Create dropdown items
-	      $action = $archived ? 'unarchive' : 'archive';
-	      JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'notes');
+	      if($canChange) {
+		// Create dropdown items
+		$action = $archived ? 'unarchive' : 'archive';
+		JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'notes');
 
-	      $action = $trashed ? 'untrash' : 'trash';
-	      JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'notes');
+		$action = $trashed ? 'untrash' : 'trash';
+		JHtml::_('actionsdropdown.' . $action, 'cb' . $i, 'notes');
 
-	      // Render dropdown list
-	      echo JHtml::_('actionsdropdown.render', $this->escape($item->title));
+		// Render dropdown list
+		echo JHtml::_('actionsdropdown.render', $this->escape($item->title));
+	      }
 	      ?>
 	    </div>
 	  </td>

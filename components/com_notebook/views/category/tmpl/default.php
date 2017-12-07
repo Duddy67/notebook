@@ -37,7 +37,7 @@ var notebook = {
 	      <?php echo JHtml::_('content.prepare', $this->category->title, '', $this->category->extension.'.category.title'); ?>
 	  </h2>
   <?php endif; ?>
-  <?php if ($this->params->get('show_tags'), 1) : ?>
+  <?php if ($this->params->get('show_tags', 1)) : ?>
 	  <?php echo JLayoutHelper::render('joomla.content.tags', $this->category->tags->itemTags); ?>
   <?php endif; ?>
   <?php if ($this->params->get('show_description') || $this->params->def('show_description_image')) : ?>

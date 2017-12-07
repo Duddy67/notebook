@@ -50,7 +50,8 @@
 	<field name="published" type="list"
 	       label="JSTATUS"
 	       description="JFIELD_PUBLISHED_DESC"
-	       class="inputbox" default="1">
+	       class="chzn-color-state"
+	       default="1">
 		<option value="1">JPUBLISHED</option>
 		<option value="0">JUNPUBLISHED</option>
 		<option value="2">JARCHIVED</option>

@@ -14,6 +14,7 @@ JHtml::_('formbehavior.chosen', 'select');
 
 //Prevent params layout (layouts/joomla/edit/params.php) to display twice some fieldsets.
 $this->ignore_fieldsets = array('details', 'permissions', 'jmetadata');
+$canDo = NotebookHelper::getActions($this->state->get('filter.category_id'));
 ?>
 
 <script type="text/javascript">
@@ -62,10 +63,12 @@ Joomla.submitbutton = function(task)
 
       <?php echo JLayoutHelper::render('joomla.edit.params', $this); ?>
 
-      <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'permissions', JText::_('COM_NOTEBOOK_TAB_PERMISSIONS', true)); ?>
-	      <?php echo $this->form->getInput('rules'); ?>
-	      <?php echo $this->form->getInput('asset_id'); ?>
-      <?php echo JHtml::_('bootstrap.endTab'); ?>
+      <?php if($canDo->get('core.admin')) : ?>
+	<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'permissions', JText::_('COM_NOTEBOOK_TAB_PERMISSIONS', true)); ?>
+		<?php echo $this->form->getInput('rules'); ?>
+		<?php echo $this->form->getInput('asset_id'); ?>
+	<?php echo JHtml::_('bootstrap.endTab'); ?>
+      <?php endif; ?>
   </div>
 
   <input type="hidden" name="task" value="" />
