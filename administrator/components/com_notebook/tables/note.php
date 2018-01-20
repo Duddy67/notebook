@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Note Book
- * @copyright Copyright (c) 2017 - 2017 Lucas Sanner
+ * @copyright Copyright (c) 2017 - 2018 Lucas Sanner
  * @license GNU General Public License version 3, or later
  */
 
