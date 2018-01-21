@@ -263,6 +263,7 @@ class NotebookControllerNote extends JControllerForm
     }
   }
 
+
   /**
    * Function that allows child controller access to model data after the data has been saved.
    *
@@ -275,8 +276,16 @@ class NotebookControllerNote extends JControllerForm
    */
   protected function postSaveHook(JModelLegacy $model, $validData = array())
   {
-    return;
+    /* If ever needed.
+    //In case of a brand new item the only way to get its id (ie: the last inserted id) is from the session. 
+    $itemId = $model->getState('form.id');
+    //Gets the item state as well.
+    $isNew = $model->getState('form.new');
+    //Gets the item data.
+    $data = $model->getItem($itemId);
+    */
   }
+
 
   /**
    * Method to save a record.

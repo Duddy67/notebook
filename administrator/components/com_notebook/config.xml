@@ -384,54 +384,53 @@
     </fieldset>
 
     <fieldset name="list_default_parameters"
-	    label="JGLOBAL_LIST_LAYOUT_OPTIONS"
-	    description="COM_NOTEBOOK_CONFIG_LIST_SETTINGS_DESC" >
+	      label="JGLOBAL_LIST_LAYOUT_OPTIONS"
+	      description="COM_NOTEBOOK_CONFIG_LIST_SETTINGS_DESC" >
 
-	    <field name="show_headings"
-		   type="radio"
-		   class="btn-group btn-group-yesno"
-		   default="1"
-		   label="JGLOBAL_SHOW_HEADINGS_LABEL"
-		   description="JGLOBAL_SHOW_HEADINGS_DESC">
-		   <option value="1">JSHOW</option>
-		   <option value="0">JHIDE</option>
-	    </field>
+	      <field name="show_headings"
+		     type="radio"
+		     class="btn-group btn-group-yesno"
+		     default="1"
+		     label="JGLOBAL_SHOW_HEADINGS_LABEL"
+		     description="JGLOBAL_SHOW_HEADINGS_DESC">
+		     <option value="1">JSHOW</option>
+		     <option value="0">JHIDE</option>
+	      </field>
 
-	    <field name="list_show_date"
-		    type="radio"
-		    class="btn-group btn-group-yesno"
-		    label="JGLOBAL_SHOW_DATE_LABEL"
-		    description="COM_NOTEBOOK_SHOW_DATE_DESC"
-		    default="1">
-		    <option value="1">JSHOW</option>
-		    <option value="0">JHIDE</option>
-	    </field>
+	      <field name="list_show_date"
+		      type="radio"
+		      class="btn-group btn-group-yesno"
+		      label="JGLOBAL_SHOW_DATE_LABEL"
+		      description="COM_NOTEBOOK_SHOW_DATE_DESC"
+		      default="1">
+		      <option value="1">JSHOW</option>
+		      <option value="0">JHIDE</option>
+	      </field>
 
-	    <field name="date_format"
-		    type="text" size="15"
-		    label="JGLOBAL_DATE_FORMAT_LABEL"
-		    description="JGLOBAL_DATE_FORMAT_DESC" />
+	      <field name="date_format"
+		      type="text" size="15"
+		      label="JGLOBAL_DATE_FORMAT_LABEL"
+		      description="JGLOBAL_DATE_FORMAT_DESC" />
 
-	    <field name="list_show_hits"
-		    type="radio"
-		    class="btn-group btn-group-yesno"
-		    label="JGLOBAL_LIST_HITS_LABEL"
-		    description="COM_NOTEBOOK_SHOW_HITS_DESC"
-		    default="1">
-		    <option value="1">JSHOW</option>
-		    <option value="0">JHIDE</option>
-	    </field>
+	      <field name="list_show_hits"
+		      type="radio"
+		      class="btn-group btn-group-yesno"
+		      label="JGLOBAL_LIST_HITS_LABEL"
+		      description="COM_NOTEBOOK_SHOW_HITS_DESC"
+		      default="1">
+		      <option value="1">JSHOW</option>
+		      <option value="0">JHIDE</option>
+	      </field>
 
-	    <field name="list_show_author"
-		    type="radio"
-		    class="btn-group btn-group-yesno"
-		    label="JGLOBAL_LIST_AUTHOR_LABEL"
-		    description="COM_NOTEBOOK_SHOW_AUTHOR_DESC"
-		    default="1">
-		    <option value="1">JSHOW</option>
-		    <option value="0">JHIDE</option>
-	    </field>
-
+	      <field name="list_show_author"
+		      type="radio"
+		      class="btn-group btn-group-yesno"
+		      label="JGLOBAL_LIST_AUTHOR_LABEL"
+		      description="COM_NOTEBOOK_SHOW_AUTHOR_DESC"
+		      default="1">
+		      <option value="1">JSHOW</option>
+		      <option value="0">JHIDE</option>
+	      </field>
     </fieldset>
 
     <fieldset name="shared" label="COM_NOTEBOOK_SHARED_LABEL"
@@ -459,67 +458,74 @@
 		     type="radio" default="1"
 		     class="btn-group btn-group-yesno"
 		     label="JGLOBAL_DISPLAY_SELECT_LABEL"
-		     description="JGLOBAL_DISPLAY_SELECT_DESC">
+		     description="COM_NOTEBOOK_DISPLAY_SELECT_DESC">
 		     <option value="1">JSHOW</option>
 		     <option value="0">JHIDE</option>
 	      </field>
 
-		<field name="spacer" type="spacer" hr="true" />
+	      <field name="display_num" 
+		     type="text"
+		     label="COM_NOTEBOOK_NUMBER_ITEMS_DISPLAY_LABEL"
+		     description="COM_NOTEBOOK_NUMBER_ITEMS_DISPLAY_DESC"
+		     default="10">
+	      </field>
 
-	    <field name="orderby_pri"
-		    type="list"
-		    default="none"
-		    label="JGLOBAL_CATEGORY_ORDER_LABEL"
-		    description="JGLOBAL_CATEGORY_ORDER_DESC">
-		    <option value="none">JGLOBAL_NO_ORDER</option>
-		    <option value="alpha">JGLOBAL_TITLE_ALPHABETICAL</option>
-		    <option value="ralpha">JGLOBAL_TITLE_REVERSE_ALPHABETICAL</option>
-		    <option value="order">JGLOBAL_CATEGORY_MANAGER_ORDER</option>
-	    </field>
+	      <field name="spacer" type="spacer" hr="true" />
 
-	    <field name="orderby_sec" type="list"
-		   default="rdate"
-		   label="COM_NOTEBOOK_NOTE_ORDER_LABEL" 
-		   description="COM_NOTEBOOK_NOTE_ORDER_DESC">
-		   <option value="rdate">JGLOBAL_MOST_RECENT_FIRST</option>
-		   <option value="date">JGLOBAL_OLDEST_FIRST</option>
-		   <option value="alpha">COM_NOTEBOOK_TITLE_ALPHABETICAL</option>
-		   <option value="ralpha">COM_NOTEBOOK_TITLE_REVERSE_ALPHABETICAL</option>
-		   <option value="author">JGLOBAL_AUTHOR_ALPHABETICAL</option>
-		   <option value="rauthor">JGLOBAL_AUTHOR_REVERSE_ALPHABETICAL</option>
-		   <option value="hits">JGLOBAL_MOST_HITS</option>
-		   <option value="rhits">JGLOBAL_LEAST_HITS</option>
-		   <option value="order">JGLOBAL_ARTICLE_MANAGER_ORDER</option>
-	    </field>
+	      <field name="orderby_pri"
+		      type="list"
+		      default="none"
+		      label="JGLOBAL_CATEGORY_ORDER_LABEL"
+		      description="JGLOBAL_CATEGORY_ORDER_DESC">
+		      <option value="none">JGLOBAL_NO_ORDER</option>
+		      <option value="alpha">JGLOBAL_TITLE_ALPHABETICAL</option>
+		      <option value="ralpha">JGLOBAL_TITLE_REVERSE_ALPHABETICAL</option>
+		      <option value="order">JGLOBAL_CATEGORY_MANAGER_ORDER</option>
+	      </field>
 
-	    <field name="order_date" type="list"
-		   default="published"
-		   label="JGLOBAL_ORDERING_DATE_LABEL" 
-		   description="COM_NOTEBOOK_NOTE_ORDER_DATE_DESC">
-		   <option value="created">JGLOBAL_CREATED</option>
-		   <option value="modified">JGLOBAL_MODIFIED</option>
-		   <option value="published">JPUBLISHED</option>
-	    </field>
+	      <field name="orderby_sec" type="list"
+		     default="rdate"
+		     label="COM_NOTEBOOK_NOTE_ORDER_LABEL" 
+		     description="COM_NOTEBOOK_NOTE_ORDER_DESC">
+		     <option value="rdate">JGLOBAL_MOST_RECENT_FIRST</option>
+		     <option value="date">JGLOBAL_OLDEST_FIRST</option>
+		     <option value="alpha">COM_NOTEBOOK_TITLE_ALPHABETICAL</option>
+		     <option value="ralpha">COM_NOTEBOOK_TITLE_REVERSE_ALPHABETICAL</option>
+		     <option value="author">JGLOBAL_AUTHOR_ALPHABETICAL</option>
+		     <option value="rauthor">JGLOBAL_AUTHOR_REVERSE_ALPHABETICAL</option>
+		     <option value="hits">JGLOBAL_MOST_HITS</option>
+		     <option value="rhits">JGLOBAL_LEAST_HITS</option>
+		     <option value="order">JGLOBAL_ARTICLE_MANAGER_ORDER</option>
+	      </field>
 
-	    <field name="show_pagination"
-		    type="list"
-		    default="2"
-		    label="JGLOBAL_Pagination_Label"
-		    description="JGLOBAL_Pagination_Desc">
-		    <option value="0">JHIDE</option>
-		    <option value="1">JSHOW</option>
-		    <option value="2">JGLOBAL_AUTO</option>
-	    </field>
+	      <field name="order_date" type="list"
+		     default="published"
+		     label="JGLOBAL_ORDERING_DATE_LABEL" 
+		     description="COM_NOTEBOOK_NOTE_ORDER_DATE_DESC">
+		     <option value="created">JGLOBAL_CREATED</option>
+		     <option value="modified">JGLOBAL_MODIFIED</option>
+		     <option value="published">JPUBLISHED</option>
+	      </field>
 
-	    <field name="show_pagination_results"
-		    type="radio"
-		    class="btn-group btn-group-yesno"
-		    default="1"
-		    label="JGLOBAL_PAGINATION_RESULTS_LABEL"
-		    description="JGLOBAL_PAGINATION_RESULTS_DESC">
-		    <option value="1">JSHOW</option>
-		    <option value="0">JHIDE</option>
-	    </field>
+	      <field name="show_pagination"
+		      type="list"
+		      default="2"
+		      label="JGLOBAL_Pagination_Label"
+		      description="JGLOBAL_Pagination_Desc">
+		      <option value="0">JHIDE</option>
+		      <option value="1">JSHOW</option>
+		      <option value="2">JGLOBAL_AUTO</option>
+	      </field>
+
+	      <field name="show_pagination_results"
+		      type="radio"
+		      class="btn-group btn-group-yesno"
+		      default="1"
+		      label="JGLOBAL_PAGINATION_RESULTS_LABEL"
+		      description="JGLOBAL_PAGINATION_RESULTS_DESC">
+		      <option value="1">JSHOW</option>
+		      <option value="0">JHIDE</option>
+	      </field>
     </fieldset>
 
     <fieldset name="integration"

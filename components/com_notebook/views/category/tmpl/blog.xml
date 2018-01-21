@@ -192,20 +192,26 @@
 			<option value="author">JAUTHOR</option>
 		</field>
 
-		<field	name="filter_ordering" type="list"
-		label="COM_NOTEBOOK_SHOW_SORTING_FILTER_LABEL"
-		description="COM_NOTEBOOK_SHOW_SORTING_FILTER_DESC">
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
+		<field name="filter_ordering" type="list"
+		       label="COM_NOTEBOOK_SHOW_SORTING_FILTER_LABEL"
+		       description="COM_NOTEBOOK_SHOW_SORTING_FILTER_DESC">
+		       <option value="">JGLOBAL_USE_GLOBAL</option>
+		       <option value="0">JHIDE</option>
+		       <option value="1">JSHOW</option>
 		</field>
 
-		<field	name="show_pagination_limit" type="list"
-		label="JGLOBAL_DISPLAY_SELECT_LABEL"
-		description="JGLOBAL_DISPLAY_SELECT_DESC">
-			<option value="">JGLOBAL_USE_GLOBAL</option>
-			<option value="0">JHIDE</option>
-			<option value="1">JSHOW</option>
+		<field name="show_pagination_limit" type="list"
+		       label="JGLOBAL_DISPLAY_SELECT_LABEL"
+		       description="COM_NOTEBOOK_DISPLAY_SELECT_DESC">
+		       <option value="">JGLOBAL_USE_GLOBAL</option>
+		       <option value="0">JHIDE</option>
+		       <option value="1">JSHOW</option>
+		</field>
+
+		<field name="display_num" 
+		       type="text"
+		       label="COM_NOTEBOOK_NUMBER_ITEMS_DISPLAY_LABEL"
+		       description="COM_NOTEBOOK_NUMBER_ITEMS_DISPLAY_DESC">
 		</field>
 
 		<field name="spacer2" type="spacer" hr="true" />
