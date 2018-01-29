@@ -22,10 +22,6 @@ $nowDate = $displayData['now_date'];
 	      <?php if($params->get('link_title') && $params->get('access-view')) :
 
 		    $link = JRoute::_(NotebookHelperRoute::getNoteRoute($item->slug, $item->catid, $item->language));
-		    //If the tag view is used the getNoteRoute function calling is slighly different.
-		    if(isset($item->tag_ids)) {
-		      $link = JRoute::_(NotebookHelperRoute::getNoteRoute($item->slug, $item->tag_ids, $item->language, true));
-		    }
 	      ?>
 		<a href="<?php echo $link; ?>">
 		      <?php echo $this->escape($item->title); ?></a>

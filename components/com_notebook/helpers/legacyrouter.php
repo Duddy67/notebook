@@ -61,84 +61,142 @@ class NotebookRouterRulesLegacy implements JComponentRouterRulesInterface
     $params = JComponentHelper::getParams('com_notebook');
     $advanced = $params->get('sef_advanced_link', 0);
 
+    // We need a menu item.  Either the one specified in the query, or the current active one if none specified
     if(empty($query['Itemid'])) {
       $menuItem = $this->router->menu->getActive();
+      $menuItemGiven = false;
     }
     else {
       $menuItem = $this->router->menu->getItem($query['Itemid']);
+      $menuItemGiven = true;
     }
 
-    $mView = empty($menuItem->query['view']) ? null : $menuItem->query['view'];
-    $mId = empty($menuItem->query['id']) ? null : $menuItem->query['id'];
+    // Check again
+    if($menuItemGiven && isset($menuItem) && $menuItem->component != 'com_notebook') {
+      $menuItemGiven = false;
+      unset($query['Itemid']);
+    }
 
     if(isset($query['view'])) {
       $view = $query['view'];
-
-      if(empty($query['Itemid']) || empty($menuItem) || $menuItem->component != 'com_notebook') {
-	$segments[] = $query['view'];
-      }
-
-      unset($query['view']);
+    }
+    else {
+      // We need to have a view in the query or it is an invalid URL
+      return;
     }
 
-    // Are we dealing with a contact that is attached to a menu item?
-    if(isset($view) && ($mView == $view) and isset($query['id']) and ($mId == (int) $query['id'])) {
-      unset($query['view'], $query['catid'], $query['id']);
+    // Are we dealing with a note or a category that is attached to a menu item?
+    if($menuItem !== null && $menuItem->query['view'] == $query['view'] && isset($menuItem->query['id'], $query['id'])
+       && $menuItem->query['id'] == (int)$query['id'])
+    {
+      unset($query['view']);
+
+      if(isset($query['catid'])) {
+	unset($query['catid']);
+      }
+
+      if(isset($query['layout'])) {
+	unset($query['layout']);
+      }
+
+      unset($query['id']);
 
       return;
     }
 
-    if(isset($view) and ($view == 'category' or $view == 'note')) {
+    if($view == 'category' || $view == 'note') {
+      if(!$menuItemGiven) {
+	$segments[] = $view;
+      }
 
-      if($mId != (int) $query['id'] || $mView != $view) {
+      unset($query['view']);
 
-	if($view == 'note' && isset($query['catid'])) {
+      if($view == 'note') {
+	if(isset($query['id']) && isset($query['catid']) && $query['catid']) {
 	  $catid = $query['catid'];
+
+	  // Make sure we have the id and the alias
+	  if(strpos($query['id'], ':') === false) {
+	    $db = JFactory::getDbo();
+	    $dbQuery = $db->getQuery(true)
+		    ->select('alias')
+		    ->from('#__notebook_note')
+		    ->where('id='.(int)$query['id']);
+	    $db->setQuery($dbQuery);
+	    $alias = $db->loadResult();
+	    $query['id'] = $query['id'].':'.$alias;
+	  }
 	}
-	elseif(isset($query['id'])) {
+	else {
+	  // We should have these two set for this view.  If we don't, it is an error
+	  return;
+	}
+      }
+      else {
+	if(isset($query['id'])) {
 	  $catid = $query['id'];
 	}
+	else {
+	  // We should have id set for this view.  If we don't, it is an error
+	  return;
+	}
+      }
 
-	$menuCatid = $mId;
-	$categories = JCategories::getInstance('Notebook');
-	$category = $categories->get($catid);
+      if($menuItemGiven && isset($menuItem->query['id'])) {
+	$mCatid = $menuItem->query['id'];
+      }
+      else {
+	$mCatid = 0;
+      }
 
-	if($category) {
-	  // TODO Throw error that the category either not exists or is unpublished
-	  $path = array_reverse($category->getPath());
+      $categories = JCategories::getInstance('Notebook');
+      $category = $categories->get($catid);
 
-	  $array = array();
+      if(!$category) {
+	// We couldn't find the category we were given.  Bail.
+	return;
+      }
 
-	  foreach($path as $id) {
-	    if((int) $id == (int) $menuCatid) {
-	      break;
-	    }
+      $path = array_reverse($category->getPath());
 
-	    if($advanced) {
-	      list($tmp, $id) = explode(':', $id, 2);
-	    }
+      $array = array();
 
-	    $array[] = $id;
-	  }
-
-	  $segments = array_merge($segments, array_reverse($array));
+      foreach($path as $id) {
+	if((int) $id == (int) $mCatid) {
+	  break;
 	}
 
-	if($view == 'note') {
-	  if($advanced) {
-	   list($tmp, $id) = explode(':', $query['id'], 2);
-	  }
-	  else {
-	    $id = $query['id'];
-	  }
+	list($tmp, $id) = explode(':', $id, 2);
 
-	  $segments[] = $id;
+	$array[] = $id;
+      }
+
+      $array = array_reverse($array);
+
+      if(!$advanced && count($array)) {
+	$array[0] = (int) $catid . ':' . $array[0];
+      }
+
+      $segments = array_merge($segments, $array);
+
+      if($view == 'note') {
+	if($advanced) {
+	  list($tmp, $id) = explode(':', $query['id'], 2);
 	}
+	else {
+	  $id = $query['id'];
+	}
+
+	$segments[] = $id;
       }
 
       unset($query['id'], $query['catid']);
     }
 
+    /*
+     * If the layout is specified and it is the same as the layout in the menu item, we
+     * unset it so it doesn't go into the query string.
+     */
     if(isset($query['layout'])) {
       if(!empty($query['Itemid']) && isset($menuItem->query['layout'])) {
 	if($query['layout'] == $menuItem->query['layout']) {
@@ -189,28 +247,104 @@ class NotebookRouterRulesLegacy implements JComponentRouterRulesInterface
     // Count route segments
     $count = count($segments);
 
-    // Standard routing for newsfeeds.
+  /*
+   * Standard routing for notes. If we don't pick up an Itemid then we get the view from the segments
+   * the first segment is the view and the last segment is the id of the note or category.
+   */
     if(!isset($item)) {
       $vars['view'] = $segments[0];
       $vars['id'] = $segments[$count - 1];
       return;
     }
 
-    // From the categories view, we can only jump to a category.
-    $id = (isset($item->query['id']) && $item->query['id'] > 1) ? $item->query['id'] : 'root';
+    /*
+     * If there is only one segment, then it points to either an note or a category.
+     * We test it first to see if it is a category.  If the id and alias match a category,
+     * then we assume it is a category.  If they don't we assume it is an note
+     */
+    if($count == 1) {
+      // We check to see if an alias is given.  If not, we assume it is an note
+      if(strpos($segments[0], ':') === false) {
+	$vars['view'] = 'note';
+	$vars['id'] = (int) $segments[0];
 
-    $notebookCategory = JCategories::getInstance('Notebook')->get($id);
+	return;
+      }
 
-    $categories = $notebookCategory ? $notebookCategory->getChildren() : array();
+      list($id, $alias) = explode(':', $segments[0], 2);
+
+      // First we check if it is a category
+      $category = JCategories::getInstance('Notebook')->get($id);
+      $db = JFactory::getDbo();
+
+      if($category && $category->alias == $alias) {
+	$vars['view'] = 'category';
+	$vars['id'] = $id;
+
+	return;
+      }
+      else {
+	$query = $db->getQuery(true)
+		->select($db->quoteName(array('alias', 'catid')))
+		->from($db->quoteName('#__notebook_note'))
+		->where($db->quoteName('id') . ' = ' . (int)$id);
+	$db->setQuery($query);
+	$note = $db->loadObject();
+
+	if($note) {
+	  if($note->alias == $alias) {
+	    $vars['view'] = 'note';
+	    $vars['catid'] = (int)$note->catid;
+	    $vars['id'] = (int)$id;
+
+	    return;
+	  }
+	}
+      }
+    }
+
+    /*
+     * If there was more than one segment, then we can determine where the URL points to
+     * because the first segment will have the target category id prepended to it.  If the
+     * last segment has a number prepended, it is an note, otherwise, it is a category.
+     */
+    if(!$advanced) {
+      $cat_id = (int)$segments[0];
+
+      $note_id = (int)$segments[$count - 1];
+
+      if($note_id > 0) {
+	$vars['view'] = 'note';
+	$vars['catid'] = $cat_id;
+	$vars['id'] = $note_id;
+      }
+      else {
+	$vars['view'] = 'category';
+	$vars['id'] = $cat_id;
+      }
+
+      return;
+    }
+
+    // We get the category id from the menu item and search from there
+    $id = $item->query['id'];
+    $category = JCategories::getInstance('Notebook')->get($id);
+
+    if(!$category) {
+      JError::raiseError(404, JText::_('COM_NOTEBOOK_ERROR_PARENT_CATEGORY_NOT_FOUND'));
+      return;
+    }
+
+    $categories = $category->getChildren();
     $vars['catid'] = $id;
     $vars['id'] = $id;
     $found = 0;
 
     foreach($segments as $segment) {
-      $segment = $advanced ? str_replace(':', '-', $segment) : $segment;
+      $segment = str_replace(':', '-', $segment);
 
       foreach($categories as $category) {
-	if($category->slug == $segment || $category->alias == $segment) {
+	if($category->alias == $segment) {
 	  $vars['id'] = $category->id;
 	  $vars['catid'] = $category->id;
 	  $vars['view'] = 'category';
@@ -226,8 +360,8 @@ class NotebookRouterRulesLegacy implements JComponentRouterRulesInterface
 	  $query = $db->getQuery(true)
 		  ->select($db->quoteName('id'))
 		  ->from('#__notebook_note')
-		  ->where($db->quoteName('catid').' = '.(int) $vars['catid'])
-		  ->where($db->quoteName('alias').' = '.$db->quote($segment));
+		  ->where($db->quoteName('catid').'='.(int) $vars['catid'])
+		  ->where($db->quoteName('alias').'='.$db->quote($segment));
 	  $db->setQuery($query);
 	  $nid = $db->loadResult();
 	}
