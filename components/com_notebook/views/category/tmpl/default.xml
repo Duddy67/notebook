@@ -245,7 +245,7 @@
 	<fieldset name="note" label="JGLOBAL_FIELDSET_OPTIONS">
 		<field name="show_title"
 		       type="list"
-		       label="JGLOBAL_SHOW_TITLE_LABEL"
+		       label="COM_NOTEBOOK_SHOW_TITLE_LABEL"
 		       description="COM_NOTEBOOK_SHOW_TITLE_DESC">
 		       <option value="">JGLOBAL_USE_GLOBAL</option>
 		       <option value="use_note">COM_NOTEBOOK_FIELD_VALUE_USE_NOTE_SETTINGS</option>

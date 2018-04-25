@@ -3,13 +3,13 @@
 
     <fieldset name="notes"
 	      label="COM_NOTEBOOK_FIELDSET_CONFIG_NOTES_LABEL"
-	      description="COM_NOTEBOOK_FIELDSET_CONFIG_NOTES_DES">
+	      description="COM_NOTEBOOK_FIELDSET_CONFIG_NOTES_DESC">
 
 	<field name="show_title"
 	       type="radio"
 	       default="1"
 	       class="btn-group btn-group-yesno"
-	       label="JGLOBAL_SHOW_TITLE_LABEL"
+	       label="COM_NOTEBOOK_SHOW_TITLE_LABEL"
 	       description="COM_NOTEBOOK_SHOW_TITLE_DESC">
 	       <option value="1">JSHOW</option>
 	       <option value="0">JHIDE</option>
@@ -159,7 +159,7 @@
 	       default="1"
 	       class="btn-group btn-group-yesno"
 	       label="JGLOBAL_SHOW_UNAUTH_LINKS_LABEL"
-	       description="JGLOBAL_SHOW_UNAUTH_LINKS_DESC">
+	       description="COM_NOTEBOOK_SHOW_UNAUTH_LINKS_DESC">
 	       <option value="1">JYES</option>
 	       <option value="0">JNO</option>
 	</field>
@@ -362,7 +362,7 @@
 		<field name="multi_column_order"
 			type="list"
 			default="0"
-			label="JGLOBAL_MULTI_COLUMN_ORDER_LABEL"
+			label="COM_NOTEBOOK_MULTI_COLUMN_ORDER_LABEL"
 			description="COM_NOTEBOOK_MULTI_COLUMN_ORDER_DESC">
 			<option value="0">JGLOBAL_DOWN</option>
 			<option value="1">JGLOBAL_ACROSS</option>

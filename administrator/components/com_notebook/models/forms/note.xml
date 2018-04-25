@@ -118,7 +118,7 @@
 	<field name="show_title"
 	       type="list"
 	       class="chzn-color"
-	       label="JGLOBAL_SHOW_TITLE_LABEL"
+	       label="COM_NOTEBOOK_SHOW_TITLE_LABEL"
 	       description="COM_NOTEBOOK_SHOW_TITLE_DESC">
 	       <option value="">JGLOBAL_USE_GLOBAL</option>
 	       <option value="1">JSHOW</option>
@@ -268,7 +268,7 @@
 	       type="list"
 	       class="chzn-color"
 	       label="JGLOBAL_SHOW_UNAUTH_LINKS_LABEL"
-	       description="JGLOBAL_SHOW_UNAUTH_LINKS_DESC">
+	       description="COM_NOTEBOOK_SHOW_UNAUTH_LINKS_DESC">
 	       <option value="">JGLOBAL_USE_GLOBAL</option>
 	       <option value="1">JYES</option>
 	       <option value="0">JNO</option>
