@@ -376,7 +376,7 @@ class NotebookModelCategory extends JModelList
     if($this->getState('filter.publish_date')) {
       // Filter by start and end dates.
       $nullDate = $db->quote($db->getNullDate());
-      $nowDate = $db->quote(JFactory::getDate('now', JFactory::getConfig()->get('offset'))->toSql(true));
+      $nowDate = $db->quote(JFactory::getDate()->toSql());
 
       $query->where('(n.publish_up = '.$nullDate.' OR n.publish_up <= '.$nowDate.')')
 	    ->where('(n.publish_down = '.$nullDate.' OR n.publish_down >= '.$nowDate.')');
