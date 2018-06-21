@@ -565,6 +565,36 @@ class NotebookModelCategory extends JModelList
 
     return true;
   }
+
+
+  /**
+   * Returns note title suggestions for a given search request.
+   *
+   * @param   string $search 	The request search to get the matching title suggestions.
+   * @param   int  $pk  	Optional primary key of the current tag.
+   *
+   * @return  mixed		An array of suggestion results.
+   *
+   */
+  public function getAutocompleteSuggestions($search, $pk = 0)
+  {
+    $pk = (!empty($pk)) ? $pk : (int) $this->getState('category.id');
+    $results = array();
+
+    $db = $this->getDbo();
+    $query = $db->getQuery(true);
+    $query->select('title AS value, id AS data')
+	  ->from('#__notebook_note')
+	  ->where('catid='.(int)$pk)
+	  ->where('published=1')
+	  ->where('title LIKE '.$db->Quote($search.'%'))
+	  ->order('title DESC');
+    $db->setQuery($query);
+    //Requested to get the JQuery autocomplete working properly.
+    $results['suggestions'] = $db->loadAssocList();
+
+    return $results;
+  }
 }
 
 

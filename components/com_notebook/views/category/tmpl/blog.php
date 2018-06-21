@@ -59,10 +59,10 @@ var notebook = {
       <?php if ($this->params->get('filter_field') != 'hide') :?>
 	<div class="btn-group input-append span6">
 	  <input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>"
-		  class="inputbox" onchange="notebook.submitForm();" title="<?php echo JText::_('COM_NOTEBOOK_FILTER_SEARCH_DESC'); ?>"
+		  class="inputbox" title="<?php echo JText::_('COM_NOTEBOOK_FILTER_SEARCH_DESC'); ?>"
 		  placeholder="<?php echo JText::_('COM_NOTEBOOK_'.$this->params->get('filter_field').'_FILTER_LABEL'); ?>" />
 
-	    <button type="submit" class="btn hasTooltip" title="<?php echo JHtml::tooltipText('JSEARCH_FILTER_SUBMIT'); ?>">
+	    <button type="submit" onclick="notebook.submitForm();" class="btn hasTooltip" title="<?php echo JHtml::tooltipText('JSEARCH_FILTER_SUBMIT'); ?>">
 		    <i class="icon-search"></i>
 	    </button>
 
@@ -163,7 +163,18 @@ var notebook = {
     <?php endif; ?>
 
     <input type="hidden" name="limitstart" value="" />
+    <input type="hidden" id="token" name="<?php echo JSession::getFormToken(); ?>" value="1" />
     <input type="hidden" name="task" value="" />
   </form>
 </div><!-- blog -->
+
+<?php
+
+if($this->params->get('filter_field') == 'title') {
+  //Loads the JQuery autocomplete file.
+  JHtml::_('script', 'media/jui/js/jquery.autocomplete.min.js');
+  //Loads our js script.
+  $doc = JFactory::getDocument();
+  $doc->addScript(JURI::base().'components/com_notebook/js/autocomplete.js');
+}
 

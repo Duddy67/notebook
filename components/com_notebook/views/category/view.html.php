@@ -150,8 +150,7 @@ class NotebookViewCategory extends JViewCategory
     $this->nowDate = JFactory::getDate()->toSql();
 
     $this->prepareDocument();
-
-    //$this->setDocument();
+    $this->setDocument();
 
     return parent::display($tpl);
   }
@@ -237,7 +236,7 @@ class NotebookViewCategory extends JViewCategory
   protected function setDocument() 
   {
     //Include css file (if needed).
-    //$doc = JFactory::getDocument();
-    //$doc->addStyleSheet(JURI::base().'components/com_notebook/css/notebook.css');
+    $doc = JFactory::getDocument();
+    $doc->addStyleSheet(JURI::base().'components/com_notebook/css/notebook.css');
   }
 }
