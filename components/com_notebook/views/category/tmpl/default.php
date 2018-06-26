@@ -118,6 +118,7 @@ var notebook = {
 
     <input type="hidden" name="limitstart" value="" />
     <input type="hidden" id="token" name="<?php echo JSession::getFormToken(); ?>" value="1" />
+    <input type="hidden" id="cat-id" name="cat_id" value="<?php echo $this->category->id; ?>" />
     <input type="hidden" name="task" value="" />
   </form>
 </div><!-- list -->

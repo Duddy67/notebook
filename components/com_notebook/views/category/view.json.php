@@ -8,18 +8,19 @@
 defined('_JEXEC') or die;
 
 /**
- * JSON View class for the Note Book component. It's mainly used for Ajax request. 
+ * JSON Category View class. Mainly used for Ajax request. 
  */
 class NotebookViewCategory extends JViewCategory
 {
   public function display($tpl = null)
   {
     $jinput = JFactory::getApplication()->input;
+    $catId = $jinput->get('cat_id', 0, 'uint');
     $search = $jinput->get('search', '', 'str');
 
     // Get some data from the models
     $model = $this->getModel();
-    $results = $model->getAutocompleteSuggestions($search);
+    $results = $model->getAutocompleteSuggestions($catId, $search);
 
     echo new JResponseJson($results);
   }
