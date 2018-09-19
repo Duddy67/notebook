@@ -72,6 +72,7 @@ class NotebookViewCategory extends JViewCategory
     //Get the user object and the current url, (needed in the note edit layout).
     $this->user = JFactory::getUser();
     $this->uri = JUri::getInstance();
+    $this->pagination = $this->get('Pagination');
 
     // Prepare the data.
     // Compute the note slugs.

@@ -147,11 +147,11 @@ var notebook = {
 	    <?php if ($this->params->def('show_pagination_results', 1)) : ?>
 		    <p class="counter pull-right">
 			    <?php echo $this->pagination->getPagesCounter(); ?>
+			    <?php //echo $this->pagination->getResultsCounter(); ?>
 		    </p>
 	    <?php endif; ?>
 
-	    <?php //Load our own pagination layout. ?>
-	    <?php echo JLayoutHelper::render('note_pagination', $this->pagination, JPATH_SITE.'/components/com_notebook/layouts/'); ?>
+	    <?php echo $this->pagination->getListFooter(); ?>
     </div>
     <?php endif; ?>
 
