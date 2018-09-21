@@ -97,15 +97,22 @@ var notebook = {
 
     <?php if(($this->params->def('show_pagination', 2) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
     <div class="pagination">
-
-	    <?php if ($this->params->def('show_pagination_results', 1)) : ?>
-		    <p class="counter pull-right">
-			    <?php echo $this->pagination->getPagesCounter(); ?>
-			    <?php //echo $this->pagination->getResultsCounter(); ?>
-		    </p>
-	    <?php endif; ?>
-
 	    <?php echo $this->pagination->getListFooter(); ?>
+
+	    <?php if ($this->params->def('show_pagination_results', 1) || $this->params->def('show_pagination_pages', 1)) : ?>
+	      <div class="notebook-results">
+		  <?php if ($this->params->def('show_pagination_results', 1)) : ?>
+		      <p class="counter pull-left small">
+			<?php echo $this->pagination->getResultsCounter(); ?>
+		      </p>
+		  <?php endif; ?>
+		  <?php if ($this->params->def('show_pagination_pages', 1)) : ?>
+		      <p class="counter pull-right small">
+			<?php echo $this->pagination->getPagesCounter(); ?>
+		      </p>
+		  <?php endif; ?>
+	      </div>
+	    <?php endif; ?>
     </div>
     <?php endif; ?>
 
