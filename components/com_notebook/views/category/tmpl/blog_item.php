@@ -13,18 +13,16 @@ $params = $this->item->params;
 ?>
 
 <div class="note-item">
-  <?php echo JLayoutHelper::render('note_title', array('item' => $this->item, 'params' => $params, 'now_date' => $this->nowDate),
-				    JPATH_SITE.'/components/com_notebook/layouts/'); ?>
+  <?php echo JLayoutHelper::render('note.note_title', array('item' => $this->item, 'params' => $params, 'now_date' => $this->nowDate)); ?>
 
-  <?php echo JLayoutHelper::render('icons', array('item' => $this->item, 'user' => $this->user, 'uri' => $this->uri),
-				    JPATH_SITE.'/components/com_notebook/layouts/'); ?>
+  <?php echo JLayoutHelper::render('note.icons', array('item' => $this->item, 'user' => $this->user, 'uri' => $this->uri)); ?>
 
   <?php $useDefList = ($params->get('show_modify_date') || $params->get('show_publish_date') || $params->get('show_create_date')
 		       || $params->get('show_hits') || $params->get('show_category') || $params->get('show_parent_category')
 		       || $params->get('show_author') ); ?>
 
   <?php if ($useDefList) : ?>
-    <?php echo JLayoutHelper::render('info_block', array('item' => $this->item, 'params' => $params)); ?>
+    <?php echo JLayoutHelper::render('note.info_block', array('item' => $this->item, 'params' => $params)); ?>
   <?php endif; ?>
 
   <?php echo $this->item->intro_text; ?>
@@ -45,7 +43,7 @@ $params = $this->item->params;
 	    $link->setVar('return', base64_encode(JRoute::_(NotebookHelperRoute::getNoteRoute($this->item->slug, $this->item->catid, $this->item->language), false)));
 	  endif; ?>
 
-	<?php echo JLayoutHelper::render('readmore', array('item' => $this->item, 'params' => $params, 'link' => $link)); ?>
+	<?php echo JLayoutHelper::render('note.readmore', array('item' => $this->item, 'params' => $params, 'link' => $link)); ?>
 
   <?php endif; ?>
 </div>
