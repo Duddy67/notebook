@@ -150,6 +150,10 @@ class NotebookViewCategory extends JViewCategory
 
     $this->nowDate = JFactory::getDate()->toSql();
 
+    // Creates a new JForm object
+    $this->filterForm = new JForm('FilterForm');
+    $this->filterForm->loadFile(JPATH_SITE.'/components/com_notebook/models/forms/filter_category.xml');
+
     $this->prepareDocument();
     $this->setDocument();
 
