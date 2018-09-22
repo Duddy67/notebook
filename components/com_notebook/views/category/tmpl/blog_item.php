@@ -13,7 +13,7 @@ $params = $this->item->params;
 ?>
 
 <div class="note-item">
-  <?php echo JLayoutHelper::render('note.note_title', array('item' => $this->item, 'params' => $params, 'now_date' => $this->nowDate)); ?>
+  <?php echo JLayoutHelper::render('note.title', array('item' => $this->item, 'params' => $params, 'now_date' => $this->nowDate)); ?>
 
   <?php echo JLayoutHelper::render('note.icons', array('item' => $this->item, 'user' => $this->user, 'uri' => $this->uri)); ?>
 

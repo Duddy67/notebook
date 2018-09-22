@@ -22,7 +22,7 @@ $item = $this->item;
     </div>
   <?php endif; ?>
 
-  <?php echo JLayoutHelper::render('note.note_title', array('item' => $item, 'params' => $params, 'now_date' => $this->nowDate)); ?>
+  <?php echo JLayoutHelper::render('note.title', array('item' => $item, 'params' => $params, 'now_date' => $this->nowDate)); ?>
 
   <?php echo JLayoutHelper::render('note.icons', array('item' => $this->item, 'user' => $this->user, 'uri' => $this->uri)); ?>
 
