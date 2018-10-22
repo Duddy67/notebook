@@ -163,9 +163,11 @@ class NotebookModelCategory extends JModelList
     $this->setState('list.start', $limitstart);
 
     // Optional filter text
-    $this->setState('list.filter_search', $app->input->getString('filter_search'));
+    $search = $this->getUserStateFromRequest($this->context.'.list.filter_search', 'filter_search');
+    $this->setState('list.filter_search', $search);
     //Get the value of the select list and load it in the session.
-    $this->setState('list.filter_ordering', $app->input->getString('filter_ordering'));
+    $filterOrdering = $this->getUserStateFromRequest($this->context.'.list.filter_ordering', 'filter_ordering');
+    $this->setState('list.filter_ordering', $filterOrdering);
 
     $user = JFactory::getUser();
     $asset = 'com_notebook';
