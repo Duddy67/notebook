@@ -68,6 +68,7 @@ var notebook = {
 	      if($filterName == 'filter_search' && $this->params->get('filter_field') != 'hide') { ?>
 		<div class="btn-group input-append span6">
 	      <?php
+	            //Sets the proper hint to display according to the chosen filter (ie: title or author).
 		    $hint = JText::_('COM_NOTEBOOK_'.$this->params->get('filter_field').'_FILTER_LABEL');
 		    $this->filterForm->setFieldAttribute($filterName, 'hint', $hint); 
 		    //Displays only the input tag (without the div around).

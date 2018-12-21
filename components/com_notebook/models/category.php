@@ -163,9 +163,9 @@ class NotebookModelCategory extends JModelList
     $this->setState('list.start', $limitstart);
 
     // Optional filter text
-    $search = $this->getUserStateFromRequest($this->context.'.list.filter_search', 'filter_search');
-    $this->setState('list.filter_search', $search);
-    //Get the value of the select list and load it in the session.
+    $filterSearch = $this->getUserStateFromRequest($this->context.'.list.filter_search', 'filter_search');
+    $this->setState('list.filter_search', $filterSearch);
+    // Filter.order
     $filterOrdering = $this->getUserStateFromRequest($this->context.'.list.filter_ordering', 'filter_ordering');
     $this->setState('list.filter_ordering', $filterOrdering);
 
@@ -390,12 +390,12 @@ class NotebookModelCategory extends JModelList
     }
 
     // Filter by search in title
-    $search = $this->getState('list.filter_search');
+    $filterSearch = $this->getState('list.filter_search');
     //Get the field to search by.
     $field = $this->getState('params')->get('filter_field');
-    if(!empty($search)) {
-      $search = $db->quote('%'.$db->escape($search, true).'%');
-      $query->where('(n.'.$field.' LIKE '.$search.')');
+    if(!empty($filterSearch)) {
+      $filterSearch = $db->quote('%'.$db->escape($filterSearch, true).'%');
+      $query->where('(n.'.$field.' LIKE '.$filterSearch.')');
     }
 
     //Get the notes ordering by default set in the menu options. (Note: sec stands for secondary). 
