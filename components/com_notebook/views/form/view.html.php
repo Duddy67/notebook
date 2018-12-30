@@ -1,15 +1,11 @@
 <?php
 /**
  * @package Note Book
- * @copyright Copyright (c) 2017 - 2018 Lucas Sanner
+ * @copyright Copyright (c) 2017 - 2019 Lucas Sanner
  * @license GNU General Public License version 3, or later
  */
 
-
-// No direct access
-defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
+defined('_JEXEC') or die('Restricted access'); // No direct access
 
 
 class NotebookViewForm extends JViewLegacy

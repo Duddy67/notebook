@@ -1,16 +1,13 @@
 <?php
 /**
  * @package Note Book 1.x
- * @copyright Copyright (c) 2017 - 2018 Lucas Sanner
+ * @copyright Copyright (c) 2017 - 2019 Lucas Sanner
  * @license GNU General Public License version 3, or later
  */
 
-
-// No direct access to this file
-defined('_JEXEC') or die;
+defined('_JEXEC') or die('Restricted access'); // No direct access to this file
  // import joomla's filesystem classes
 jimport('joomla.filesystem.folder');
-
 
 
 class com_notebookInstallerScript

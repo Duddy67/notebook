@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Note Book
- * @copyright Copyright (c) 2017 - 2018 Lucas Sanner
+ * @copyright Copyright (c) 2017 - 2019 Lucas Sanner
  * @license GNU General Public License version 3, or later
  */
 
@@ -9,7 +9,8 @@
 //Note: Override some parent form methods (libraries/legacy/controllers/form.php).
 //      See the file for more details.
 
-defined('_JEXEC') or die;
+defined('_JEXEC') or die('Restricted access');
+
 
 /**
  * @package     Joomla.Site
@@ -56,6 +57,7 @@ class NotebookControllerNote extends JControllerForm
     }
   }
 
+
   /**
    * Method override to check if you can add a new record.
    *
@@ -87,6 +89,7 @@ class NotebookControllerNote extends JControllerForm
       return $allow;
     }
   }
+
 
   /**
    * Method override to check if you can edit an existing record.
@@ -137,6 +140,7 @@ class NotebookControllerNote extends JControllerForm
     return parent::allowEdit($data, $key);
   }
 
+
   /**
    * Method to cancel an edit.
    *
@@ -153,6 +157,7 @@ class NotebookControllerNote extends JControllerForm
     // Redirect to the return page.
     $this->setRedirect($this->getReturnPage());
   }
+
 
   /**
    * Method to edit an existing record.
@@ -172,6 +177,7 @@ class NotebookControllerNote extends JControllerForm
     return $result;
   }
 
+
   /**
    * Method to get a model object, loading it if required.
    *
@@ -189,6 +195,7 @@ class NotebookControllerNote extends JControllerForm
 
     return $model;
   }
+
 
   /**
    * Gets the URL arguments to append to an item redirect.
@@ -241,6 +248,7 @@ class NotebookControllerNote extends JControllerForm
 
     return $append;
   }
+
 
   /**
    * Get the return URL.

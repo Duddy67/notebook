@@ -1,11 +1,12 @@
 <?php
 /**
  * @package Note Book
- * @copyright Copyright (c) 2017 - 2018 Lucas Sanner
+ * @copyright Copyright (c) 2017 - 2019 Lucas Sanner
  * @license GNU General Public License version 3, or later
  */
 
-defined('JPATH_BASE') or die;
+defined('JPATH_BASE') or die('Restricted access');
+
 
 $params = $displayData['params'];
 $item = $displayData['item'];

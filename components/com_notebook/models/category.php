@@ -1,13 +1,15 @@
 <?php
 /**
  * @package Note Book
- * @copyright Copyright (c) 2017 - 2018 Lucas Sanner
+ * @copyright Copyright (c) 2017 - 2019 Lucas Sanner
  * @license GNU General Public License version 3, or later
  */
 
-defined('_JEXEC') or die;
+defined('_JEXEC') or die('Restricted access');
+
 
 require_once JPATH_COMPONENT_SITE.'/helpers/query.php';
+
 
 /**
  * Note Book Component Model

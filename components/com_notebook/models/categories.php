@@ -1,14 +1,11 @@
 <?php
 /**
  * @package Note Book
- * @copyright Copyright (c) 2017 - 2018 Lucas Sanner
+ * @copyright Copyright (c) 2017 - 2019 Lucas Sanner
  * @license GNU General Public License version 3, or later
  */
 
-
-defined('_JEXEC') or die; //No direct access to this file.
-
-jimport('joomla.application.component.modellist');
+defined('_JEXEC') or die('Restricted access'); // No direct access to this file.
 
 
 class NotebookModelCategories extends JModelList
@@ -83,7 +80,7 @@ class NotebookModelCategories extends JModelList
    */
   public function getItems()
   {
-    if(!count($this->_items)) {
+    if($this->_items === null) {
       $app = JFactory::getApplication();
       $menu = $app->getMenu();
       $active = $menu->getActive();
