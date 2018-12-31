@@ -8,7 +8,6 @@
 defined('JPATH_BASE') or die('Restricted access'); // No direct access to this file.
 
 JFormHelper::loadFieldClass('list');
-require_once __DIR__.'/../../helpers/notebook.php';
 
 
 class JFormFieldComponentuser extends JFormFieldList

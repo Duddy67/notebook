@@ -7,8 +7,6 @@
 
 defined('_JEXEC') or die('Restricted access'); // No direct access
 
-require_once JPATH_COMPONENT.'/helpers/notebook.php';
- 
 
 class NotebookViewNotes extends JViewLegacy
 {
