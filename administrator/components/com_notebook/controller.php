@@ -12,9 +12,6 @@ class NotebookController extends JControllerLegacy
 {
   public function display($cachable = false, $urlparams = false) 
   {
-    //Loads the component helper.
-    JLoader::register('NotebookHelper', JPATH_ADMINISTRATOR.'/components/com_notebook/helpers/notebook.php');
-
     //Display the submenu.
     NotebookHelper::addSubmenu($this->input->get('view', 'notes'));
 

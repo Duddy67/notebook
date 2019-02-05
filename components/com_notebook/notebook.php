@@ -7,8 +7,10 @@
 
 defined('_JEXEC') or die('Restricted access'); // No direct access.
 
-require_once JPATH_COMPONENT.'/helpers/route.php';
-require_once JPATH_COMPONENT.'/helpers/query.php';
+//Registers the component helper files. They will be loaded automatically later as soon
+//as an helper class is instantiate.
+JLoader::register('NotebookHelperRoute', JPATH_SITE.'/components/com_notebook/helpers/route.php');
+JLoader::register('NotebookHelperQuery', JPATH_SITE.'/components/com_notebook/helpers/query.php');
 
 
 $controller = JControllerLegacy::getInstance('Notebook');

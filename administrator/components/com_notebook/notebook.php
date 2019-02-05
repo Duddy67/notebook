@@ -16,6 +16,10 @@ if(!JFactory::getUser()->authorise('core.manage', 'com_notebook')) {
   return false;
 }
 
+//Registers the component helper file. It will be loaded automatically later as soon
+//as the helper class is instantiate.
+JLoader::register('NotebookHelper', JPATH_ADMINISTRATOR.'/components/com_notebook/helpers/notebook.php');
+
 $controller = JControllerLegacy::getInstance('Notebook');
 
 //Execute the requested task (set in the url).
