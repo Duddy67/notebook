@@ -5,7 +5,8 @@
  * @license GNU General Public License version 3, or later
  */
 
-defined('_JEXEC') or die('Restricted access'); // No direct access to this file.
+// No direct access to this file.
+defined('_JEXEC') or die('Restricted access'); 
  
 
 class NotebookControllerNotes extends JControllerAdmin
