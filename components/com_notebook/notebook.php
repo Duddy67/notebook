@@ -5,10 +5,11 @@
  * @license GNU General Public License version 3, or later
  */
 
-defined('_JEXEC') or die('Restricted access'); // No direct access.
+// No direct access.
+defined('_JEXEC') or die('Restricted access'); 
 
-//Registers the component helper files. They will be loaded automatically later as soon
-//as an helper class is instantiate.
+// Registers the component helper files. They will be loaded automatically later as soon
+// as an helper class is instantiate.
 JLoader::register('NotebookHelperRoute', JPATH_SITE.'/components/com_notebook/helpers/route.php');
 JLoader::register('NotebookHelperQuery', JPATH_SITE.'/components/com_notebook/helpers/query.php');
 

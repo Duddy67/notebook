@@ -19,7 +19,7 @@ var notebook = {
 
   submitForm: function() {
     var action = document.getElementById('siteForm').action;
-    //Set an anchor on the form.
+    // Set an anchor on the form.
     document.getElementById('siteForm').action = action+'#siteForm';
     document.getElementById('siteForm').submit();
   }
@@ -58,22 +58,22 @@ var notebook = {
 : ?>
     <div class="notebook-toolbar clearfix">
     <?php
-            //Gets the filter fields.
+            // Gets the filter fields.
 	    $fieldset = $this->filterForm->getFieldset('filter');
 
-	    //Loops through the fields.
+	    // Loops through the fields.
 	    foreach($fieldset as $field) {
 	      $filterName = $field->getAttribute('name');
 
 	      if($filterName == 'filter_search' && $this->params->get('filter_field') != 'hide') { ?>
 		<div class="btn-group input-append span6">
 	      <?php
-	            //Sets the proper hint to display according to the chosen filter (ie: title or author).
+	            // Sets the proper hint to display according to the chosen filter (ie: title or author).
 		    $hint = JText::_('COM_NOTEBOOK_'.$this->params->get('filter_field').'_FILTER_LABEL');
 		    $this->filterForm->setFieldAttribute($filterName, 'hint', $hint); 
-		    //Displays only the input tag (without the div around).
+		    // Displays only the input tag (without the div around).
 		    echo $this->filterForm->getInput($filterName, null, $this->state->get('list.'.$filterName));
-		    //Adds the search and clear buttons.  ?>
+		    // Adds the search and clear buttons.  ?>
 		<button type="submit" onclick="notebook.submitForm();" class="btn hasTooltip"
 			title="<?php echo JHtml::tooltipText('JSEARCH_FILTER_SUBMIT'); ?>">
 		    <i class="icon-search"></i></button>
@@ -85,7 +85,7 @@ var notebook = {
       <?php	}
 	      elseif(($filterName == 'filter_ordering' && $this->params->get('filter_ordering')) ||
 		     ($filterName == 'limit' && $this->params->get('show_pagination_limit'))) {
-		//Sets the field value to the currently selected value.
+		// Sets the field value to the currently selected value.
 		$field->setValue($this->state->get('list.'.$filterName));
 		echo $field->renderField(array('hiddenLabel' => true, 'class' => 'span3 notebook-filters'));
 	      }
@@ -189,9 +189,9 @@ var notebook = {
 <?php
 
 if($this->params->get('filter_field') == 'title') {
-  //Loads the JQuery autocomplete file.
+  // Loads the JQuery autocomplete file.
   JHtml::_('script', 'media/jui/js/jquery.autocomplete.min.js');
-  //Loads our js script.
+  // Loads our js script.
   $doc = JFactory::getDocument();
   $doc->addScript(JURI::base().'components/com_notebook/js/autocomplete.js');
 }

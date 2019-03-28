@@ -5,7 +5,8 @@
  * @license GNU General Public License version 3, or later
  */
 
-defined('_JEXEC') or die('Restricted access'); // No direct access.
+// No direct access.
+defined('_JEXEC') or die('Restricted access'); 
 
 
 class NotebookController extends JControllerLegacy
@@ -23,7 +24,7 @@ class NotebookController extends JControllerLegacy
   {
     $this->input = JFactory::getApplication()->input;
 
-    //Note frontpage Editor note proxying:
+    // Note frontpage Editor note proxying:
     if($this->input->get('view') === 'notes' && $this->input->get('layout') === 'modal') {
       JHtml::_('stylesheet', 'system/adminlist.css', array(), true);
       $config['base_path'] = JPATH_COMPONENT_ADMINISTRATOR;
@@ -35,12 +36,11 @@ class NotebookController extends JControllerLegacy
 
   public function display($cachable = false, $urlparams = false) 
   {
-
     // Set the default view name and format from the Request.
-    // Note we are using n_id to avoid collisions with the router and the return page.
+    // N.B: we are using n_id to avoid collisions with the router and the return page.
     // Frontend is a bit messier than the backend.
     $id = $this->input->getInt('n_id');
-    //Set the view, (categories by default).
+    // Set the view, (categories by default).
     $vName = $this->input->getCmd('view', 'categories');
     $this->input->set('view', $vName);
 
@@ -51,7 +51,7 @@ class NotebookController extends JControllerLegacy
       return false;
     }
 
-    //Make sure the parameters passed in the input by the component are safe.
+    // Make sure the parameters passed in the input by the component are safe.
     $safeurlparams = array('catid' => 'INT', 'id' => 'INT',
 			    'cid' => 'ARRAY', 'limit' => 'UINT',
 			    'limitstart' => 'UINT', 'return' => 'BASE64',
@@ -59,7 +59,7 @@ class NotebookController extends JControllerLegacy
 			    'filter-ordering' => 'STRING', 'lang' => 'CMD',
 			    'Itemid' => 'INT');
 
-    //Display the view.
+    // Display the view.
     parent::display($cachable, $safeurlparams);
   }
 

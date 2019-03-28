@@ -10,7 +10,7 @@ defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.framework');
 
 
-//Create shortcut for params.
+// Create shortcut for params.
 $params = $this->item->params;
 ?>
 
@@ -37,7 +37,7 @@ $params = $this->item->params;
   <?php if($params->get('show_readmore') && !empty($this->item->full_text)) :
 	  if($params->get('access-view')) :
 	    $link = JRoute::_(NotebookHelperRoute::getNoteRoute($this->item->slug, $this->item->catid, $this->item->language));
-	  else : //Redirect the user to the login page.
+	  else : // Redirect the user to the login page.
 	    $menu = JFactory::getApplication()->getMenu();
 	    $active = $menu->getActive();
 	    $itemId = $active->id;

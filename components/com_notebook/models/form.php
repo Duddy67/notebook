@@ -11,7 +11,7 @@ defined('_JEXEC') or die('Restricted access');
 require_once JPATH_ADMINISTRATOR.'/components/com_notebook/models/note.php';
 
 
-//Inherit the backend version.
+// Inherit the backend version.
 class NotebookModelForm extends NotebookModelNote
 {
   /**
@@ -39,10 +39,10 @@ class NotebookModelForm extends NotebookModelNote
     $pk = $app->input->getInt('n_id');
     $this->setState('note.id', $pk);
 
-    //Retrieve a possible category id from the url query.
+    // Retrieve a possible category id from the url query.
     $this->setState('note.catid', $app->input->getInt('catid'));
 
-    //Retrieve a possible encoded return url from the url query.
+    // Retrieve a possible encoded return url from the url query.
     $return = $app->input->get('return', null, 'base64');
     $this->setState('return_page', base64_decode($return));
 
@@ -69,7 +69,7 @@ class NotebookModelForm extends NotebookModelNote
     $table = $this->getTable();
 
     // Attempt to load the row.
-    //Notes: If it's a new item, load function just return true.
+    // N.B: If it's a new item, load function just return true.
     $return = $table->load($itemId);
 
     // Check for a table object error.
@@ -78,15 +78,15 @@ class NotebookModelForm extends NotebookModelNote
       return false;
     }
 
-    //Get the fields of the table as an array
+    // Get the fields of the table as an array
     $properties = $table->getProperties(1);
-    //then convert the array into an object.
+    // then convert the array into an object.
     $item = JArrayHelper::toObject($properties, 'JObject');
 
-    //Note: params fields are missing on purpose in the xml form as
-    //params cannot be set on frontend.
-    //All of the note items created on frontend has an empty
-    //params value.
+    // Note: params fields are missing on purpose in the xml form as
+    // params cannot be set on frontend.
+    // All of the note items created on frontend has an empty
+    // params value.
 
     // Convert params field to Registry.
     $item->params = new JRegistry;
@@ -114,7 +114,7 @@ class NotebookModelForm extends NotebookModelNote
       // Check edit state permission.
       $item->params->set('access-change', $user->authorise('core.edit.state', $asset));
 
-      //Set up the text to display in the editor.
+      // Set up the text to display in the editor.
       $item->notetext = $item->intro_text;
       if(!empty($item->full_text)) {
 	$item->notetext .= '<hr id="system-readmore" />'.$item->full_text;
@@ -124,11 +124,12 @@ class NotebookModelForm extends NotebookModelNote
       $catId = (int) $this->getState('note.catid');
 
       if($catId) {
-	//Check the change access in this specific category.
+	// Check the change access in this specific category.
 	$item->params->set('access-change', $user->authorise('core.edit.state', 'com_notebook.category.'.$catId));
 	$item->catid = $catId;
       }
-      else { //Check the general change access.
+      // Check the general change access.
+      else { 
 	$item->params->set('access-change', $user->authorise('core.edit.state', 'com_notebook'));
       }
     }
@@ -138,7 +139,7 @@ class NotebookModelForm extends NotebookModelNote
     $registry->loadString($item->metadata);
     $item->metadata = $registry->toArray();
 
-    //Get the note tags.
+    // Get the note tags.
     $item->tags = new JHelperTags;
     $item->tags->getTagIds($item->id, 'com_notebook.note');
     $item->metadata['tags'] = $item->tags;

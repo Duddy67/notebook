@@ -5,7 +5,8 @@
  * @license GNU General Public License version 3, or later
  */
 
-defined('_JEXEC') or die('Restricted access'); // No direct access
+// No direct access
+defined('_JEXEC') or die('Restricted access'); 
 
 
 class NotebookViewForm extends JViewLegacy
@@ -17,11 +18,22 @@ class NotebookViewForm extends JViewLegacy
   protected $isNew = 0;
   protected $location = null;
 
+
+  /**
+   * Execute and display a template script.
+   *
+   * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+   *
+   * @return  mixed  A string if successful, otherwise an Error object.
+   *
+   * @see     \JViewLegacy::loadTemplate()
+   * @since   3.0
+   */
   function display($tpl = null)
   {
     $user = JFactory::getUser();
 
-    //Redirect unregistered users to the login page.
+    // Redirect unregistered users to the login page.
     if($user->guest) {
       $app = JFactory::getApplication();
       $app->redirect('index.php?option=com_users&view=login'); 
@@ -34,12 +46,13 @@ class NotebookViewForm extends JViewLegacy
     $this->item = $this->get('Item');
     $this->return_page	= $this->get('ReturnPage');
 
-    //Check if the user is allowed to create a new document.
+    // Check if the user is allowed to create a new document.
     if(empty($this->item->id)) {
       $authorised = $user->authorise('core.create', 'com_notebook') || (count($user->getAuthorisedCategories('com_notebook', 'core.create')));
       $this->isNew = 1;
     }
-    else { //Check if the user is allowed to edit this document. 
+    // Check if the user is allowed to edit this document. 
+    else { 
       $authorised = $this->item->params->get('access-edit');
     }
 
@@ -56,7 +69,7 @@ class NotebookViewForm extends JViewLegacy
 
     // Create a shortcut to the parameters.
     $params = &$this->state->params;
-    //Get the possible extra class name.
+    // Get the possible extra class name.
     $this->pageclass_sfx = htmlspecialchars($params->get('pageclass_sfx'));
 
     $this->params = $params;
@@ -70,16 +83,20 @@ class NotebookViewForm extends JViewLegacy
       $this->form->setFieldAttribute('catid', 'readonly', 'true');
     }
 
-    //$this->setDocument();
+    $this->setDocument();
 
     parent::display($tpl);
   }
 
 
+  /**
+   * Includes possible css and Javascript files.
+   *
+   * @return  void
+   */
   protected function setDocument() 
   {
-    //Include css file (if needed).
-    //$doc = JFactory::getDocument();
-    //$doc->addStyleSheet(JURI::base().'components/com_notebook/css/notebook.css');
+    $doc = JFactory::getDocument();
+    $doc->addStyleSheet(JURI::base().'components/com_notebook/css/notebook.css');
   }
 }

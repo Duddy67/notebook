@@ -101,22 +101,22 @@ class NotebookModelCategory extends JModelList
   {
     $app = JFactory::getApplication('site');
 
-    //Get and set the current category id.
+    // Get and set the current category id.
     $pk = $app->input->getInt('id');
     $this->setState('category.id', $pk);
 
-    //getParams function return global parameters overrided by the menu parameters (if any).
-    //Note: Some specific parameters of this menu are not returned.
+    // getParams function return global parameters overrided by the menu parameters (if any).
+    // N.B: Some specific parameters of this menu are not returned.
     $params = $app->getParams();
 
     $menuParams = new JRegistry;
 
-    //Get the menu with its specific parameters.
+    // Get the menu with its specific parameters.
     if($menu = $app->getMenu()->getActive()) {
       $menuParams->loadString($menu->params);
     }
 
-    //Merge Global and Menu Item params into a new object.
+    // Merge Global and Menu Item params into a new object.
     $mergedParams = clone $menuParams;
     $mergedParams->merge($params);
 
@@ -125,39 +125,39 @@ class NotebookModelCategory extends JModelList
 
     // process show_noauth parameter
 
-    //The user is not allowed to see the registered notes unless he has the proper view permissions.
+    // The user is not allowed to see the registered notes unless he has the proper view permissions.
     if(!$params->get('show_noauth')) {
-      //Set the access filter to true. This way the SQL query checks against the user
-      //view permissions and fetchs only the notes this user is allowed to see.
+      // Set the access filter to true. This way the SQL query checks against the user
+      // view permissions and fetchs only the notes this user is allowed to see.
       $this->setState('filter.access', true);
     }
-    //The user is allowed to see any of the registred notes (ie: intro_text as a teaser). 
+    // The user is allowed to see any of the registred notes (ie: intro_text as a teaser). 
     else {
-      //The user is allowed to see all the notes or some of them.
-      //All of the notes are returned and it's up to thelayout to 
-      //deal with the access (ie: redirect the user to login form when Read more
-      //button is clicked).
+      // The user is allowed to see all the notes or some of them.
+      // All of the notes are returned and it's up to thelayout to 
+      // deal with the access (ie: redirect the user to login form when Read more
+      // button is clicked).
       $this->setState('filter.access', false);
     }
 
     // Set limit for query. If list, use parameter. If blog, add blog parameters for limit.
-    //Important: The pagination limit box must be hidden to use the limit value based upon the layout.
+    // Important: The pagination limit box must be hidden to use the limit value based upon the layout.
     if(!$params->get('show_pagination_limit') && (($app->input->get('layout') === 'blog') || $params->get('layout_type') === 'blog')) {
       $limit = $params->get('num_leading_notes') + $params->get('num_intro_notes') + $params->get('num_links');
     }
     else { // list layout or blog layout with the pagination limit box shown.
-      //Get the number of songs to display per page.
+      // Get the number of songs to display per page.
       $limit = $params->get('display_num', 10);
 
       if($params->get('show_pagination_limit')) {
-	//Gets the limit value from the pagination limit box.
+	// Gets the limit value from the pagination limit box.
 	$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $limit, 'uint');
       }
     }
 
     $this->setState('list.limit', $limit);
 
-    //Get the limitstart variable (used for the pagination) from the form variable.
+    // Get the limitstart variable (used for the pagination) from the form variable.
     $limitstart = $app->input->get('limitstart', 0, 'uint');
     $this->setState('list.start', $limitstart);
 
@@ -175,7 +175,7 @@ class NotebookModelCategory extends JModelList
       $asset .= '.category.'.$pk;
     }
 
-    //Check against the category permissions.
+    // Check against the category permissions.
     if((!$user->authorise('core.edit.state', $asset)) && (!$user->authorise('core.edit', $asset))) {
       // limit to published for people who can't edit or edit.state.
       $this->setState('filter.published', 1);
@@ -184,7 +184,7 @@ class NotebookModelCategory extends JModelList
       $this->setState('filter.publish_date', true);
     }
     else {
-      //User can access published, unpublished and archived notes.
+      // User can access published, unpublished and archived notes.
       $this->setState('filter.published', array(0, 1, 2));
     }
 
@@ -203,7 +203,7 @@ class NotebookModelCategory extends JModelList
     $items = parent::getItems();
     $input = JFactory::getApplication()->input;
 
-    //Get some user data.
+    // Get some user data.
     $user = JFactory::getUser();
     $userId = $user->get('id');
     $guest = $user->get('guest');
@@ -211,11 +211,11 @@ class NotebookModelCategory extends JModelList
 
     // Convert the params field into an object, saving original in _params
     foreach($items as $item) {
-      //Get the note parameters only.
+      // Get the note parameters only.
       $noteParams = new JRegistry;
       $noteParams->loadString($item->params);
-      //Set the params attribute, eg: the merged global and menu parameters set
-      //in the populateState function.
+      // Set the params attribute, eg: the merged global and menu parameters set
+      // in the populateState function.
       $item->params = clone $this->getState('params');
 
       // For Blog layout, note params override menu item params only if menu param='use_note'.
@@ -247,9 +247,9 @@ class NotebookModelCategory extends JModelList
 	  $item->params->merge($noteParams);
 	}
       }
-      else { //Default layout (list).
+      else { // Default layout (list).
 	// Merge all of the note params.
-	//Note: Note params (if they are defined) override global/menu params.
+	// N.B: Note params (if they are defined) override global/menu params.
 	$item->params->merge($noteParams);
       }
 
@@ -272,22 +272,22 @@ class NotebookModelCategory extends JModelList
       }
 
       $access = $this->getState('filter.access');
-      //Set the access view parameter.
+      // Set the access view parameter.
       if($access) {
 	// If the access filter has been set, we already have only the notes this user can view.
 	$item->params->set('access-view', true);
       }
       else { // If no access filter is set, the layout takes some responsibility for display of limited information.
 	if($item->catid == 0 || $item->category_access === null) {
-	  //In case the note is not linked to a category, we just check permissions against the note access.
+	  // In case the note is not linked to a category, we just check permissions against the note access.
 	  $item->params->set('access-view', in_array($item->access, $groups));
 	}
-	else { //Check the user permissions against the note access as well as the category access.
+	else { // Check the user permissions against the note access as well as the category access.
 	  $item->params->set('access-view', in_array($item->access, $groups) && in_array($item->category_access, $groups));
 	}
       }
 
-      //Set the type of date to display, (default layout only).
+      // Set the type of date to display, (default layout only).
       if($this->getState('params')->get('layout_type') != 'blog'
 	  && $this->getState('params')->get('list_show_date')
 	  && $this->getState('params')->get('order_date')) {
@@ -300,7 +300,7 @@ class NotebookModelCategory extends JModelList
 		  $item->displayDate = ($item->publish_up == 0) ? $item->created : $item->publish_up;
 		  break;
 
-	  default: //created
+	  default: // created
 		  $item->displayDate = $item->created;
 	}
       }
@@ -335,7 +335,7 @@ class NotebookModelCategory extends JModelList
 	                           'n.checked_out,n.checked_out_time,n.created,n.created_by,n.access,n.params,n.metadata,'.
 				   'n.metakey,n.metadesc,n.hits,n.publish_up,n.publish_down,n.language,n.modified,n.modified_by'))
 	  ->from($db->quoteName('#__notebook_note').' AS n')
-	  //Display notes of the current category.
+	  // Display notes of the current category.
 	  ->where('n.catid='.(int)$this->getState('category.id'));
 
     // Join on category table.
@@ -363,17 +363,17 @@ class NotebookModelCategory extends JModelList
     // Filter by state
     $published = $this->getState('filter.published');
     if(is_numeric($published)) {
-      //User is only allowed to see published notes.
+      // User is only allowed to see published notes.
       $query->where('n.published='.(int)$published);
     }
     elseif(is_array($published)) {
-      //User is allowed to see notes with different states.
+      // User is allowed to see notes with different states.
       JArrayHelper::toInteger($published);
       $published = implode(',', $published);
       $query->where('n.published IN ('.$published.')');
     }
 
-    //Do not show expired notes to users who can't edit or edit.state.
+    // Do not show expired notes to users who can't edit or edit.state.
     if($this->getState('filter.publish_date')) {
       // Filter by start and end dates.
       $nullDate = $db->quote($db->getNullDate());
@@ -390,24 +390,24 @@ class NotebookModelCategory extends JModelList
 
     // Filter by search in title
     $filterSearch = $this->getState('list.filter_search');
-    //Get the field to search by.
+    // Get the field to search by.
     $field = $this->getState('params')->get('filter_field');
     if(!empty($filterSearch)) {
       $filterSearch = $db->quote('%'.$db->escape($filterSearch, true).'%');
       $query->where('(n.'.$field.' LIKE '.$filterSearch.')');
     }
 
-    //Get the notes ordering by default set in the menu options. (Note: sec stands for secondary). 
+    // Get the notes ordering by default set in the menu options. (N.B: sec stands for secondary). 
     $noteOrderBy = $this->getState('params')->get('orderby_sec', 'rdate');
-    //If notes are sorted by date (ie: date, rdate), order_date defines
-    //which type of date should be used (ie: created, modified or publish_up).
+    // If notes are sorted by date (ie: date, rdate), order_date defines
+    // which type of date should be used (ie: created, modified or publish_up).
     $noteOrderDate = $this->getState('params')->get('order_date');
-    //Get the field to use in the ORDER BY clause according to the orderby_sec option.
+    // Get the field to use in the ORDER BY clause according to the orderby_sec option.
     $orderBy = NotebookHelperQuery::orderbySecondary($noteOrderBy, $noteOrderDate);
 
-    //Filter by order (eg: the select list set by the end user).
+    // Filter by order (eg: the select list set by the end user).
     $filterOrdering = $this->getState('list.filter_ordering');
-    //If the end user has define an order, we override the ordering by default.
+    // If the end user has define an order, we override the ordering by default.
     if(!empty($filterOrdering)) {
       $orderBy = NotebookHelperQuery::orderbySecondary($filterOrdering, $noteOrderDate);
     }
@@ -591,12 +591,10 @@ class NotebookModelCategory extends JModelList
 	  ->where('title LIKE '.$db->Quote($search.'%'))
 	  ->order('title DESC');
     $db->setQuery($query);
-    //Requested to get the JQuery autocomplete working properly.
+    // Requested to get the JQuery autocomplete working properly.
     $results['suggestions'] = $db->loadAssocList();
 
     return $results;
   }
 }
-
-
 

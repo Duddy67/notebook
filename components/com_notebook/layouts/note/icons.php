@@ -23,7 +23,7 @@ $uri = $displayData['uri'];
       <?php // Note the actions class is deprecated. Use dropdown-menu instead. ?>
       <ul class="dropdown-menu">
 	<?php if($canEdit) :
-	    //First check if the note is checked out by a different user
+	    // First check if the note is checked out by a different user
 	    if($item->checked_out > 0 && $item->checked_out != $user->id) :
 	      $checkoutUser = JFactory::getUser($item->checked_out);
 	      $date = JHtml::_('date', $item->checked_out_time);
@@ -35,7 +35,7 @@ $uri = $displayData['uri'];
 		   <?php echo JText::_('JLIB_HTML_CHECKED_OUT'); ?></span></a>
 	      </li>
 	   <?php else : 
-	      //Build the edit link and display it. 
+	      // Build the edit link and display it. 
 	      $url = 'index.php?option=com_notebook&task=note.edit&n_id='.$item->id.'&return='.base64_encode($uri);
 	      ?>
 	      <li class="edit-icon"><a href="<?php echo JRoute::_($url); ?>"><span class="icon-edit"></span>

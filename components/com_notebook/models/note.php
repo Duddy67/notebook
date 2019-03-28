@@ -5,7 +5,8 @@
  * @license GNU General Public License version 3, or later
  */
 
-defined('_JEXEC') or die('Restricted access'); // No direct access to this file.
+// No direct access to this file.
+defined('_JEXEC') or die('Restricted access'); 
 
 
 class NotebookModelNote extends JModelItem
@@ -30,7 +31,7 @@ class NotebookModelNote extends JModelItem
     $pk = $app->input->getInt('id');
     $this->setState('note.id', $pk);
 
-    //Load the global parameters of the component.
+    // Load the global parameters of the component.
     $params = $app->getParams();
     $this->setState('params', $params);
 
@@ -38,7 +39,7 @@ class NotebookModelNote extends JModelItem
   }
 
 
-  //Returns a Table object, always creating it.
+  // Returns a Table object, always creating it.
   public function getTable($type = 'Note', $prefix = 'NotebookTable', $config = array()) 
   {
     return JTable::getInstance($type, $prefix, $config);

@@ -5,10 +5,6 @@
  * @license GNU General Public License version 3, or later
  */
 
-
-//Note: Override some parent form methods (libraries/legacy/controllers/form.php).
-//      See the file for more details.
-
 defined('_JEXEC') or die('Restricted access');
 
 
@@ -42,6 +38,7 @@ class NotebookControllerNote extends JControllerForm
    */
   protected $urlVar = 'n.id';
 
+
   /**
    * Method to add a new record.
    *
@@ -69,10 +66,10 @@ class NotebookControllerNote extends JControllerForm
    */
   protected function allowAdd($data = array())
   {
-    //Note: If a category id is found, check whether the user is allowed to create an item into this category.
+    // Note: If a category id is found, check whether the user is allowed to create an item into this category.
 
     $user = JFactory::getUser();
-    //Get a possible category id passed in the data or URL.
+    // Get a possible category id passed in the data or URL.
     $categoryId = JArrayHelper::getValue($data, 'catid', $this->input->getInt('catid'), 'int');
     $allow = null;
 
@@ -285,11 +282,11 @@ class NotebookControllerNote extends JControllerForm
   protected function postSaveHook(JModelLegacy $model, $validData = array())
   {
     /* If ever needed.
-    //In case of a brand new item the only way to get its id (ie: the last inserted id) is from the session. 
+    // In case of a brand new item the only way to get its id (ie: the last inserted id) is from the session. 
     $itemId = $model->getState('form.id');
-    //Gets the item state as well.
+    // Gets the item state as well.
     $isNew = $model->getState('form.new');
-    //Gets the item data.
+    // Gets the item data.
     $data = $model->getItem($itemId);
     */
   }
@@ -310,10 +307,10 @@ class NotebookControllerNote extends JControllerForm
     $app = JFactory::getApplication();
     $recordId = $this->input->getInt($urlVar);
 
-    //Get the jform data.
+    // Get the jform data.
     //$data = $this->input->post->get('jform', array(), 'array');
-    //Code...
-    //Update jform with the modified data.
+    // Code...
+    // Update jform with the modified data.
     //$this->input->post->set('jform', $data);
 
     $result = parent::save($key, $urlVar);

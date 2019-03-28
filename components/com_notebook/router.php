@@ -261,5 +261,3 @@ function NotebookParseRoute($segments)
   return $router->parse($segments);
 }
 
-
-

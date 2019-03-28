@@ -5,7 +5,8 @@
  * @license GNU General Public License version 3, or later
  */
 
-defined('_JEXEC') or die('Restricted access'); // No direct access
+// No direct access
+defined('_JEXEC') or die('Restricted access'); 
 
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
 

@@ -5,7 +5,7 @@
  * @license GNU General Public License version 3, or later
  */
 
-// no direct access
+// No direct access
 defined('_JEXEC') or die('Restricted access');
 
 JHtml::_('behavior.keepalive');

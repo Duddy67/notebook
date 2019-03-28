@@ -81,11 +81,15 @@ class NotebookViewCategories extends JViewCategories
   }
 
 
+  /**
+   * Includes possible css and Javascript files.
+   *
+   * @return  void
+   */
   protected function setDocument() 
   {
-    //Include css file (if needed).
-    //$doc = JFactory::getDocument();
-    //$doc->addStyleSheet(JURI::base().'components/com_notebook/css/notebook.css');
+    $doc = JFactory::getDocument();
+    $doc->addStyleSheet(JURI::base().'components/com_notebook/css/notebook.css');
   }
 }
 

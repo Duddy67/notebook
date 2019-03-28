@@ -28,25 +28,18 @@ class NotebookHelperQuery
    */
   public static function orderbyPrimary($orderby)
   {
-    //Set the prefix to use according to the view.
-    $view = JFactory::getApplication()->input->get('view');
-    $prefix = 'ca.'; //Use notebook table.
-    if($view == 'tag') {
-      $prefix = 'n.'; //Use mapping table.
-    }
-
     switch ($orderby)
     {
       case 'alpha' :
-	      $orderby = $prefix.'path, ';
+	      $orderby = 'ca.path, ';
 	      break;
 
       case 'ralpha' :
-	      $orderby = $prefix.'path DESC, ';
+	      $orderby = 'ca.path DESC, ';
 	      break;
 
       case 'order' :
-	      $orderby = $prefix.'lft, ';
+	      $orderby = 'ca.lft, ';
 	      break;
 
       default :
@@ -70,13 +63,6 @@ class NotebookHelperQuery
   {
     $queryDate = self::getQueryDate($orderDate);
 
-    //Set the prefix to use according to the view.
-    $view = JFactory::getApplication()->input->get('view');
-    $prefix = 'n.'; //Use notebook table.
-    if($view == 'tag') {
-      $prefix = 'tm.'; //Use mapping table.
-    }
-
     switch ($orderby)
     {
       case 'date' :
@@ -96,11 +82,11 @@ class NotebookHelperQuery
 	      break;
 
       case 'order' :
-	      $orderby = $prefix.'ordering';
+	      $orderby = 'n.ordering';
 	      break;
 
       case 'rorder' :
-	      $orderby = $prefix.'ordering DESC';
+	      $orderby = 'n.ordering DESC';
 	      break;
 
       case 'author' :
@@ -112,7 +98,7 @@ class NotebookHelperQuery
 	      break;
 
       default :
-	      $orderby = $prefix.'ordering';
+	      $orderby = 'n.ordering';
 	      break;
     }
 
