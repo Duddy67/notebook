@@ -147,11 +147,9 @@ class plgSearchNotebook extends JPlugin
     $query = $db->getQuery(true);
 
     // Search notes.
-    //if ($sContent && $limit > 0)
-    //{
+    if($sContent && $limit > 0) {
       $query->clear();
 
-echo 'SEARCH';
       // SQLSRV changes.
       $case_when  = ' CASE WHEN ';
       $case_when .= $query->charLength('n.alias', '!=', '0');
@@ -205,7 +203,7 @@ echo 'SEARCH';
       foreach($rows as $key => $row) {
 	$rows[$key]->href = NotebookHelperRoute::getNoteRoute($row->slug, $row->catid, $row->language);
       }
-    //}
+    }
 
     return $rows;
   }

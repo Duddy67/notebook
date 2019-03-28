@@ -5,7 +5,8 @@
  * @license GNU General Public License version 3, or later
  */
 
-defined('_JEXEC') or die('Restricted access'); // No direct access to this file
+// No direct access to this file
+defined('_JEXEC') or die('Restricted access'); 
  // import joomla's filesystem classes
 jimport('joomla.filesystem.folder');
 
@@ -28,8 +29,8 @@ class com_notebookInstallerScript
     echo '<p>'.JText::_('COM_NOTEBOOK_INSTALLING_COMPONENT_VERSION').$this->release;
     echo '<br />'.JText::_('COM_NOTEBOOK_CURRENT_JOOMLA_VERSION').$jversion->getShortVersion().'</p>';
 
-    //Abort if the component being installed is not newer than the
-    //currently installed version.
+    // Abort if the component being installed is not newer than the
+    // currently installed version.
     if($type == 'update') {
       $oldRelease = $this->getParam('version');
       $rel = ' v-'.$oldRelease.' -> v-'.$this->release;
@@ -77,7 +78,7 @@ class com_notebookInstallerScript
    */
   function uninstall($parent) 
   {
-    //Remove tagging informations from the Joomla table.
+    // Remove tagging informations from the Joomla table.
     $db = JFactory::getDbo();
     $query = $db->getQuery(true);
     $query->delete('#__content_types')
@@ -106,22 +107,22 @@ class com_notebookInstallerScript
   function postflight($type, $parent) 
   {
     if($type == 'install') {
-      //The component parameters are not inserted into the table until the user open up the Options panel then click on the save button.
-      //The workaround is to update manually the extensions table with the parameters just after the component is installed. 
+      // The component parameters are not inserted into the table until the user open up the Options panel then click on the save button.
+      // The workaround is to update manually the extensions table with the parameters just after the component is installed. 
 
-      //Get the component config xml file
+      // Get the component config xml file
       $form = new JForm('notebook_config');
-      //Note: The third parameter must be set or the xml file won't be loaded.
+      // N.B: The third parameter must be set or the xml file won't be loaded.
       $form->loadFile(JPATH_ROOT.'/administrator/components/com_notebook/config.xml', true, '/config');
       $JsonValues = '';
       foreach($form->getFieldsets() as $fieldset) {
         foreach($form->getFieldset($fieldset->name) as $field) {
-	  //Concatenate every field as Json values.
+	  // Concatenate every field as Json values.
 	  $JsonValues .= '"'.$field->name.'":"'.$field->getAttribute('default', '').'",';
         } 
       } 
 
-      //Remove comma from the end of the string.
+      // Remove comma from the end of the string.
       $JsonValues = substr($JsonValues, 0, -1);
 
       $db = JFactory::getDbo();
@@ -132,11 +133,11 @@ class com_notebookInstallerScript
       $db->setQuery($query);
       $db->query();
 
-      //In order to use the Joomla's tagging system we have to give to Joomla some
-      //informations about the component items we want to tag.
-      //Those informations should be inserted into the #__content_types table.
+      // In order to use the Joomla's tagging system we have to give to Joomla some
+      // informations about the component items we want to tag.
+      // Those informations should be inserted into the #__content_types table.
 
-      //Informations about the Note Book note items.
+      // Informations about the Note Book note items.
       $columns = array('type_title', 'type_alias', $db->quoteName('table'), 'field_mappings', 'router');
       $query->clear();
       $query->insert('#__content_types');
@@ -148,7 +149,7 @@ $db->Quote('NotebookHelperRoute::getNoteRoute'));
       $db->setQuery($query);
       $db->query();
 
-      //Informations about the Note Book category items.
+      // Informations about the Note Book category items.
       $query->clear();
       $query->insert('#__content_types');
       $query->columns($columns);

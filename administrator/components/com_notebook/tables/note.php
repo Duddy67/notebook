@@ -5,7 +5,8 @@
  * @license GNU General Public License version 3, or later
  */
 
-defined('_JEXEC') or die('Restricted access'); // No direct access
+// No direct access
+defined('_JEXEC') or die('Restricted access'); 
  
  
 use Joomla\Registry\Registry;
@@ -24,7 +25,7 @@ class NotebookTableNote extends JTable
   function __construct(&$db) 
   {
     parent::__construct('#__notebook_note', 'id', $db);
-    //Needed to use the Joomla tagging system with the note items.
+    // Needed to use the Joomla tagging system with the note items.
     JTableObserverTags::createObserver($this, array('typeAlias' => 'com_notebook.note'));
   }
 
@@ -65,8 +66,8 @@ class NotebookTableNote extends JTable
 	$this->full_text = '';
       }
       else {
-	//Split notetext field data in 2 parts with the "readmore" tag as a separator.
-	//Note: The "readmore" tag is not included in either part.
+	// Split notetext field data in 2 parts with the "readmore" tag as a separator.
+	// N.B: The "readmore" tag is not included in either part.
 	list($this->intro_text, $this->full_text) = preg_split($pattern, $array['notetext'], 2);
       }
     }
@@ -92,7 +93,7 @@ class NotebookTableNote extends JTable
    */
   public function store($updateNulls = false)
   {
-    //Gets the current date and time (UTC).
+    // Gets the current date and time (UTC).
     $now = JFactory::getDate()->toSql();
     $user = JFactory::getUser();
 
@@ -112,11 +113,11 @@ class NotebookTableNote extends JTable
       }
     }
 
-    //Set the alias of the note.
+    // Set the alias of the note.
     
-    //Create a sanitized alias, (see stringURLSafe function for details).
+    // Create a sanitized alias, (see stringURLSafe function for details).
     $this->alias = JFilterOutput::stringURLSafe($this->alias);
-    //In case no alias has been defined, create a sanitized alias from the title field.
+    // In case no alias has been defined, create a sanitized alias from the title field.
     if(empty($this->alias)) {
       $this->alias = JFilterOutput::stringURLSafe($this->title);
     }
@@ -167,9 +168,9 @@ class NotebookTableNote extends JTable
    * @see JTable::_getAssetParentId()
    */
 
-  //Note: The component categories ACL override the items ACL, (whenever the ACL of a
-  //      category is modified, changes are spread into the items ACL).
-  //      This is the default com_content behavior. see: libraries/legacy/table/content.php
+  // N.B: The component categories ACL override the items ACL, (whenever the ACL of a
+  //       category is modified, changes are spread into the items ACL).
+  //       This is the default com_content behavior. see: libraries/legacy/table/content.php
   protected function _getAssetParentId(JTable $table = null, $id = null)
   {
     $assetId = null;

@@ -22,6 +22,7 @@ class JFormFieldModal_Note extends JFormField
    */
   protected $type = 'Modal_Note';
 
+
   /**
    * Method to get the field input markup.
    *
@@ -43,7 +44,7 @@ class JFormFieldModal_Note extends JFormField
     $script = array();
 
     // Select button script
-    $script[] = '	function jSelectNote_'.$this->id.'(id, title, catid, object) {';
+    $script[] = '	function selectNote_'.$this->id.'(id, title, catid) {';
     $script[] = '		document.getElementById("'.$this->id.'_id").value = id;';
     $script[] = '		document.getElementById("'.$this->id.'_name").value = title;';
 
@@ -80,7 +81,7 @@ class JFormFieldModal_Note extends JFormField
 
     // Setup variables for display.
     $html = array();
-    $link = 'index.php?option=com_notebook&amp;view=notes&amp;layout=modal&amp;tmpl=component&amp;function=jSelectNote_'.$this->id; 
+    $link = 'index.php?option=com_notebook&amp;view=notes&amp;layout=modal&amp;tmpl=component&amp;function=selectNote_'.$this->id; 
 
     if(isset($this->element['language'])) {
       $link .= '&amp;forcedLanguage='.$this->element['language'];

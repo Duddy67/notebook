@@ -5,13 +5,14 @@
  * @license GNU General Public License version 3, or later
  */
 
-defined('_JEXEC') or die('Restricted access'); // No direct access
+// No direct access
+defined('_JEXEC') or die('Restricted access'); 
 
 JHtml::_('behavior.formvalidator');
 JHtml::_('behavior.keepalive');
 JHtml::_('formbehavior.chosen', 'select');
 
-//Prevent params layout (layouts/joomla/edit/params.php) to display twice some fieldsets.
+// Prevent params layout (layouts/joomla/edit/params.php) to display twice some fieldsets.
 $this->ignore_fieldsets = array('details', 'permissions', 'jmetadata');
 $canDo = NotebookHelper::getActions($this->state->get('filter.category_id'));
 ?>

@@ -5,11 +5,20 @@
  * @license GNU General Public License version 3, or later
  */
 
-defined('_JEXEC') or die('Restricted access'); // No direct access to this file.
+// No direct access to this file.
+defined('_JEXEC') or die('Restricted access'); 
 
 
 class NotebookModelNotes extends JModelList
 {
+  /**
+   * Constructor.
+   *
+   * @param   array  $config  An optional associative array of configuration settings.
+   *
+   * @see     \JModelLegacy
+   * @since   1.6
+   */
   public function __construct($config = array())
   {
     if(empty($config['filter_fields'])) {
@@ -33,6 +42,22 @@ class NotebookModelNotes extends JModelList
   }
 
 
+  /**
+   * Method to auto-populate the model state.
+   *
+   * This method should only be called once per instantiation and is designed
+   * to be called on the first call to the getState() method unless the model
+   * configuration flag to ignore the request is set.
+   *
+   * Note. Calling getState in this method will result in recursion.
+   *
+   * @param   string  $ordering   An optional ordering field.
+   * @param   string  $direction  An optional direction (asc|desc).
+   *
+   * @return  void
+   *
+   * @since   1.6
+   */
   protected function populateState($ordering = null, $direction = null)
   {
     // Initialise variables.
@@ -44,7 +69,7 @@ class NotebookModelNotes extends JModelList
       $this->context .= '.'.$layout;
     }
 
-    //Get the state values set by the user.
+    // Get the state values set by the user.
     $search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
     $this->setState('filter.search', $search);
 
@@ -79,6 +104,19 @@ class NotebookModelNotes extends JModelList
   }
 
 
+  /**
+   * Method to get a store id based on the model configuration state.
+   *
+   * This is necessary because the model is used by the component and
+   * different modules that might need different sets of data or different
+   * ordering requirements.
+   *
+   * @param   string  $id  An identifier string to generate the store id.
+   *
+   * @return  string  A store id.
+   *
+   * @since   1.6
+   */
   protected function getStoreId($id = '')
   {
     // Compile the store id.
@@ -93,6 +131,13 @@ class NotebookModelNotes extends JModelList
   }
 
 
+  /**
+   * Method to get a \JDatabaseQuery object for retrieving the data set from a database.
+   *
+   * @return  \JDatabaseQuery  A \JDatabaseQuery object to retrieve the data set.
+   *
+   * @since   1.6
+   */
   protected function getListQuery()
   {
     //Create a new JDatabaseQuery object.
@@ -105,7 +150,7 @@ class NotebookModelNotes extends JModelList
 				   'n.access,n.ordering,n.created_by,n.checked_out,n.checked_out_time,n.language'))
 	  ->from('#__notebook_note AS n');
 
-    //Get the user name.
+    // Get the user name.
     $query->select('us.name AS user')
 	  ->join('LEFT', '#__users AS us ON us.id = n.created_by');
 
@@ -125,7 +170,7 @@ class NotebookModelNotes extends JModelList
     $query->select('al.title AS access_level')
 	  ->join('LEFT', '#__viewlevels AS al ON al.id = n.access');
 
-    //Filter by component category.
+    // Filter by component category.
     $categoryId = $this->getState('filter.category_id');
     if(is_numeric($categoryId)) {
       $query->where('n.catid = '.(int)$categoryId);
@@ -136,7 +181,7 @@ class NotebookModelNotes extends JModelList
       $query->where('n.catid IN ('.$categoryId.')');
     }
 
-    //Filter by title search.
+    // Filter by title search.
     $search = $this->getState('filter.search');
     if(!empty($search)) {
       if(stripos($search, 'id:') === 0) {
@@ -160,7 +205,7 @@ class NotebookModelNotes extends JModelList
       $query->where('ca.access IN ('.$groups.')');
     }
 
-    //Filter by publication state.
+    // Filter by publication state.
     $published = $this->getState('filter.published');
     if(is_numeric($published)) {
       $query->where('n.published='.(int)$published);
@@ -169,14 +214,14 @@ class NotebookModelNotes extends JModelList
       $query->where('(n.published IN (0, 1))');
     }
 
-    //Filter by user.
+    // Filter by user.
     $userId = $this->getState('filter.user_id');
     if(is_numeric($userId)) {
       $type = $this->getState('filter.user_id.include', true) ? '= ' : '<>';
       $query->where('n.created_by'.$type.(int) $userId);
     }
 
-    //Filter by language.
+    // Filter by language.
     if($language = $this->getState('filter.language')) {
       $query->where('n.language = '.$db->quote($language));
     }
@@ -191,14 +236,13 @@ class NotebookModelNotes extends JModelList
 		   ' AND '.$db->quoteName('tagmap.type_alias').' = '.$db->quote('com_notebook.note'));
     }
 
-    //Add the list to the sort.
+    // Add the list to the sort.
     $orderCol = $this->state->get('list.ordering', 'n.title');
-    $orderDirn = $this->state->get('list.direction'); //asc or desc
+    $orderDirn = $this->state->get('list.direction'); // asc or desc
 
     $query->order($db->escape($orderCol.' '.$orderDirn));
 
     return $query;
   }
 }
-
 

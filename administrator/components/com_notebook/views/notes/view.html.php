@@ -5,7 +5,8 @@
  * @license GNU General Public License version 3, or later
  */
 
-defined('_JEXEC') or die('Restricted access'); // No direct access
+// No direct access
+defined('_JEXEC') or die('Restricted access'); 
 
 
 class NotebookViewNotes extends JViewLegacy
@@ -14,7 +15,17 @@ class NotebookViewNotes extends JViewLegacy
   protected $state;
   protected $pagination;
 
-  //Display the view.
+
+  /**
+   * Execute and display a template script.
+   *
+   * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+   *
+   * @return  mixed  A string if successful, otherwise an Error object.
+   *
+   * @see     \JViewLegacy::loadTemplate()
+   * @since   3.0
+   */
   public function display($tpl = null)
   {
     $this->items = $this->get('Items');
@@ -23,34 +34,38 @@ class NotebookViewNotes extends JViewLegacy
     $this->filterForm = $this->get('FilterForm');
     $this->activeFilters = $this->get('ActiveFilters');
 
-    //Check for errors.
+    // Checks for errors.
     if(count($errors = $this->get('Errors'))) {
       JFactory::getApplication()->enqueueMessage($errors, 'error');
       return false;
     }
 
-    //Display the tool bar.
     $this->addToolBar();
-
     $this->setDocument();
     $this->sidebar = JHtmlSidebar::render();
 
-    //Display the template.
+    // Displays the template.
     parent::display($tpl);
   }
 
 
-  //Build the toolbar.
+  /**
+   * Add the page title and toolbar.
+   *
+   * @return  void
+   *
+   * @since   1.6
+   */
   protected function addToolBar() 
   {
-    //Display the view title and the icon.
+    // Displays the view title and the icon.
     JToolBarHelper::title(JText::_('COM_NOTEBOOK_NOTES_TITLE'), 'stack');
 
-    //Get the allowed actions list
+    // Gets the allowed actions list
     $canDo = NotebookHelper::getActions();
     $user = JFactory::getUser();
 
-    //The user is allowed to create or is able to create in one of the component categories.
+    // The user is allowed to create or is able to create in one of the component categories.
     if($canDo->get('core.create') || (count($user->getAuthorisedCategories('com_notebook', 'core.create'))) > 0) {
       JToolBarHelper::addNew('note.add', 'JTOOLBAR_NEW');
     }
@@ -71,7 +86,7 @@ class NotebookViewNotes extends JViewLegacy
       JToolBarHelper::trash('notes.trash','JTOOLBAR_TRASH');
     }
 
-    //Check for delete permission.
+    // Checks for delete permission.
     if($canDo->get('core.delete') || count($user->getAuthorisedCategories('com_notebook', 'core.delete'))) {
       JToolBarHelper::divider();
       JToolBarHelper::deleteList('', 'notes.delete', 'JTOOLBAR_DELETE');
@@ -84,11 +99,15 @@ class NotebookViewNotes extends JViewLegacy
   }
 
 
+  /**
+   * Includes possible css and Javascript files.
+   *
+   * @return  void
+   */
   protected function setDocument() 
   {
-    //Include css file (if needed).
-    //$doc = JFactory::getDocument();
-    //$doc->addStyleSheet(JURI::base().'components/com_notebook/notebook.css');
+    $doc = JFactory::getDocument();
+    $doc->addStyleSheet(JURI::base().'components/com_notebook/notebook.css');
   }
 }
 

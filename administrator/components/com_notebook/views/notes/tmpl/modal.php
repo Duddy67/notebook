@@ -5,7 +5,8 @@
  * @license GNU General Public License version 3, or later
  */
 
-defined('_JEXEC') or die('Restricted access'); // No direct access
+// No direct access
+defined('_JEXEC') or die('Restricted access'); 
 
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.framework', true);
@@ -20,7 +21,7 @@ if($app->isSite()) {
 }
 
 $jinput = JFactory::getApplication()->input;
-$function = $jinput->get('function', 'jSelectNote');
+$function = $jinput->get('function', 'selectNote');
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
 ?>

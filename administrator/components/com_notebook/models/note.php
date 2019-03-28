@@ -5,22 +5,41 @@
  * @license GNU General Public License version 3, or later
  */
 
-defined('_JEXEC') or die('Restricted access'); // No direct access to this file.
+// No direct access to this file.
+defined('_JEXEC') or die('Restricted access'); 
 
 
 class NotebookModelNote extends JModelAdmin
 {
-  //Prefix used with the controller messages.
+  // Prefix used with the controller messages.
   protected $text_prefix = 'COM_NOTEBOOK';
 
-  //Returns a Table object, always creating it.
-  //Table can be defined/overrided in tables/itemname.php file.
+
+  /**
+   * Returns a Table object, always creating it.
+   *
+   * @param   string  $type    The table type to instantiate
+   * @param   string  $prefix  A prefix for the table class name. Optional.
+   * @param   array   $config  Configuration array for model. Optional.
+   *
+   * @return  JTable    A database object
+   */
   public function getTable($type = 'Note', $prefix = 'NotebookTable', $config = array()) 
   {
     return JTable::getInstance($type, $prefix, $config);
   }
 
 
+  /**
+   * Method to get the record form.
+   *
+   * @param   array    $data      Data for the form.
+   * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+   *
+   * @return  JForm|boolean  A JForm object on success, false on failure
+   *
+   * @since   1.6
+   */
   public function getForm($data = array(), $loadData = true) 
   {
     $form = $this->loadForm('com_notebook.note', 'note', array('control' => 'jform', 'load_data' => $loadData));
@@ -33,6 +52,13 @@ class NotebookModelNote extends JModelAdmin
   }
 
 
+  /**
+   * Method to get the data that should be injected in the form.
+   *
+   * @return  mixed  The data for the form.
+   *
+   * @since   1.6
+   */
   protected function loadFormData() 
   {
     // Check the session for previously entered form data.
@@ -56,10 +82,10 @@ class NotebookModelNote extends JModelAdmin
   public function getItem($pk = null)
   {
     if($item = parent::getItem($pk)) {
-      //Get both intro_text and full_text together as notetext
+      // Gets both intro_text and full_text together as notetext
       $item->notetext = trim($item->full_text) != '' ? $item->intro_text."<hr id=\"system-readmore\" />".$item->full_text : $item->intro_text;
 
-      //Get tags for this item.
+      // Gets tags for this item.
       if(!empty($item->id)) {
 	$item->tags = new JHelperTags;
 	$item->tags->getTagIds($item->id, 'com_notebook.note');
@@ -105,7 +131,7 @@ class NotebookModelNote extends JModelAdmin
   public function saveorder($pks = null, $order = null)
   {
 
-    //Hand over to the parent function.
+    // Hands over to the parent function.
     return parent::saveorder($pks, $order);
   }
 }
