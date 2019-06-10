@@ -5,6 +5,7 @@
  * @license GNU General Public License version 3, or later
  */
 
+// No direct access
 defined('_JEXEC') or die('Restricted access');
 
 
@@ -66,7 +67,7 @@ class NotebookControllerNote extends JControllerForm
    */
   protected function allowAdd($data = array())
   {
-    // Note: If a category id is found, check whether the user is allowed to create an item into this category.
+    // N.B: If a category id is found, check whether the user is allowed to create an item into this category.
 
     $user = JFactory::getUser();
     // Get a possible category id passed in the data or URL.

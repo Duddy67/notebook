@@ -68,7 +68,7 @@
 		    alt="Notebook/Categories">COM_NOTEBOOK_SUBMENU_CATEGORIES</menu>
 
 	    </submenu>
-	    <!-- Note the folder attribute: This attribute describes the folder
+	    <!-- Regarding the folder attribute: This attribute describes the folder
 		    to copy FROM in the package to install therefore files copied
 		    in this section are copied from /admin/ in the package -->
 	    <files folder="admin">

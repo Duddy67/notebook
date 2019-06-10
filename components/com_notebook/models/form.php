@@ -5,6 +5,7 @@
  * @license GNU General Public License version 3, or later
  */
 
+// No direct access
 defined('_JEXEC') or die('Restricted access');
 
 // Base this model on the backend version.
@@ -25,7 +26,7 @@ class NotebookModelForm extends NotebookModelNote
   /**
    * Method to auto-populate the model state.
    *
-   * Note. Calling getState in this method will result in recursion.
+   * N.B. Calling getState in this method will result in recursion.
    *
    * @return  void
    *

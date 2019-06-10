@@ -5,6 +5,7 @@
  * @license GNU General Public License version 3, or later
  */
 
+// No direct access
 defined('_JEXEC') or die('Restricted access');
 
 JHtml::_('formbehavior.chosen', 'select');
