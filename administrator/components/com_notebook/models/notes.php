@@ -8,6 +8,8 @@
 // No direct access to this file.
 defined('_JEXEC') or die('Restricted access'); 
 
+use Joomla\Utilities\ArrayHelper;
+
 
 class NotebookModelNotes extends JModelList
 {
@@ -73,23 +75,35 @@ class NotebookModelNotes extends JModelList
     $search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
     $this->setState('filter.search', $search);
 
-    $access = $this->getUserStateFromRequest($this->context.'.filter.access', 'filter_access');
-    $this->setState('filter.access', $access);
-
-    $userId = $app->getUserStateFromRequest($this->context.'.filter.user_id', 'filter_user_id');
-    $this->setState('filter.user_id', $userId);
-
     $published = $this->getUserStateFromRequest($this->context.'.filter.published', 'filter_published', '');
     $this->setState('filter.published', $published);
-
-    $categoryId = $this->getUserStateFromRequest($this->context.'.filter.category_id', 'filter_category_id');
-    $this->setState('filter.category_id', $categoryId);
 
     $language = $this->getUserStateFromRequest($this->context . '.filter.language', 'filter_language');
     $this->setState('filter.language', $language);
 
+    // Used with the multiple list selections.
+    $formSubmited = $app->input->post->get('form_submited');
+
+    $categoryId = $this->getUserStateFromRequest($this->context.'.filter.category_id', 'filter_category_id');
+    $userId = $this->getUserStateFromRequest($this->context.'.filter.user_id', 'filter_user_id');
     $tag = $this->getUserStateFromRequest($this->context . '.filter.tag', 'filter_tag');
-    $this->setState('filter.tag', $tag);
+    $access = $this->getUserStateFromRequest($this->context.'.filter.access', 'filter_access');
+
+    if($formSubmited) {
+      // Gets the current value of the fields. 
+
+      $categoryId = $app->input->post->get('category_id');
+      $this->setState('filter.category_id', $categoryId);
+
+      $userId = $app->input->post->get('user_id');
+      $this->setState('filter.user_id', $userId);
+
+      $tag = $app->input->post->get('tag');
+      $this->setState('filter.tag', $tag);
+
+      $access = $app->input->post->get('access');
+      $this->setState('filter.access', $access);
+    }
 
     // List state information.
     parent::populateState('n.title', 'asc');
@@ -121,10 +135,11 @@ class NotebookModelNotes extends JModelList
   {
     // Compile the store id.
     $id .= ':'.$this->getState('filter.search');
-    $id .= ':'.$this->getState('filter.access');
+    $id .= ':'.serialize($this->getState('filter.access'));
     $id .= ':'.$this->getState('filter.published');
-    $id .= ':'.$this->getState('filter.user_id');
-    $id .= ':'.$this->getState('filter.category_id');
+    $id .= ':'.serialize($this->getState('filter.user_id'));
+    $id .= ':'.serialize($this->getState('filter.category_id'));
+    $id .= ':'.serialize($this->getState('filter.tag'));
     $id .= ':'.$this->getState('filter.language');
 
     return parent::getStoreId($id);
@@ -176,7 +191,7 @@ class NotebookModelNotes extends JModelList
       $query->where('n.catid = '.(int)$categoryId);
     }
     elseif(is_array($categoryId)) {
-      JArrayHelper::toInteger($categoryId);
+      $categoryId = ArrayHelper::toInteger($categoryId);
       $categoryId = implode(',', $categoryId);
       $query->where('n.catid IN ('.$categoryId.')');
     }
@@ -194,8 +209,15 @@ class NotebookModelNotes extends JModelList
     }
 
     // Filter by access level.
-    if($access = $this->getState('filter.access')) {
+    $access = $this->getState('filter.access');
+
+    if(is_numeric($access)) {
       $query->where('n.access='.(int) $access);
+    }
+    elseif (is_array($access)) {
+      $access = ArrayHelper::toInteger($access);
+      $access = implode(',', $access);
+      $query->where('n.access IN ('.$access.')');
     }
 
     // Filter by access level on categories.
@@ -220,18 +242,37 @@ class NotebookModelNotes extends JModelList
       $type = $this->getState('filter.user_id.include', true) ? '= ' : '<>';
       $query->where('n.created_by'.$type.(int) $userId);
     }
+    elseif(is_array($userId)) {
+      $userId = ArrayHelper::toInteger($userId);
+      $userId = implode(',', $userId);
+      $query->where('n.created_by IN ('.$userId.')');
+    }
 
     // Filter by language.
     if($language = $this->getState('filter.language')) {
       $query->where('n.language = '.$db->quote($language));
     }
 
-    // Filter by a single tag.
+    // Filter by a single or group of tags.
+    $hasTag = false;
     $tagId = $this->getState('filter.tag');
 
     if(is_numeric($tagId)) {
-      $query->where($db->quoteName('tagmap.tag_id').' = '.(int)$tagId)
-	    ->join('LEFT', $db->quoteName('#__contentitem_tag_map', 'tagmap').
+      $hasTag = true;
+      $query->where($db->quoteName('tagmap.tag_id').' = '.(int)$tagId);
+    }
+    elseif(is_array($tagId)) {
+      $tagId = ArrayHelper::toInteger($tagId);
+      $tagId = implode(',', $tagId);
+
+      if(!empty($tagId)) {
+	$hasTag = true;
+	$query->where($db->quoteName('tagmap.tag_id').' IN ('.$tagId.')');
+      }
+    }
+
+    if($hasTag) {
+      $query->join('LEFT', $db->quoteName('#__contentitem_tag_map', 'tagmap').
 		   ' ON '.$db->quoteName('tagmap.content_item_id').' = '.$db->quoteName('n.id').
 		   ' AND '.$db->quoteName('tagmap.type_alias').' = '.$db->quote('com_notebook.note'));
     }
