@@ -75,5 +75,28 @@ class NotebookControllerNote extends JControllerForm
     // Hand over to the parent function.
     return parent::allowEdit($data, $key);
   }
+
+
+  /**
+   * Method to run batch operations.
+   *
+   * @param   object  $model  The model.
+   *
+   * @return  boolean   True if successful, false otherwise and internal error is set.
+   *
+   * @since   2.5
+   */
+  public function batch($model = null)
+  {
+    $this->checkToken();
+
+    // Set the model
+    $model = $this->getModel('Note');
+
+    // Preset the redirect
+    $this->setRedirect(JRoute::_('index.php?option=com_notebook&view=notes'.$this->getRedirectToListAppend(), false));
+
+    return parent::batch($model);
+  }
 }
 

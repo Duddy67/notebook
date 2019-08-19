@@ -40,7 +40,7 @@ Joomla.submitbutton = function(task)
       <div class="row-fluid">
 	<div class="span9">
 	    <div class="form-vertical">
-	      <?php echo $this->form->getControlGroup('notetext'); ?>
+	      <?php echo $this->form->renderField('notetext'); ?>
 	    </div>
 	</div>
 	<div class="span3">

@@ -213,6 +213,14 @@ echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this))
       </tr>
       </tbody>
     </table>
+
+    <?php // Load the batch processing form. ?>
+    <?php if($user->authorise('core.create', 'com_notebook') && $user->authorise('core.edit', 'com_notebook')
+	      && $user->authorise('core.edit.state', 'com_notebook')) : ?>
+	    <?php echo JHtml::_('bootstrap.renderModal', 'collapseModal', array('title'  => JText::_('COM_NOTEBOOK_BATCH_OPTIONS'),
+										'footer' => $this->loadTemplate('batch_footer'),),
+										$this->loadTemplate('batch_body')); ?>
+    <?php endif; ?>
   <?php endif; ?>
 
 <input type="hidden" name="boxchecked" value="0" />

@@ -81,29 +81,29 @@ Joomla.submitbutton = function(task)
 	      <?php endif; ?>
 
 	      <?php
-		echo $this->form->getControlGroup('notetext');
+		echo $this->form->renderField('notetext');
 	      ?>
 	      </div>
 
 	      <div class="tab-pane" id="publishing">
-		<?php echo $this->form->getControlGroup('catid'); ?>
-		<?php echo $this->form->getControlGroup('tags'); ?>
-		<?php echo $this->form->getControlGroup('access'); ?>
+		<?php echo $this->form->renderField('catid'); ?>
+		<?php echo $this->form->renderField('tags'); ?>
+		<?php echo $this->form->renderField('access'); ?>
 
 		<?php if($this->item->params->get('access-change')) : ?>
-		  <?php echo $this->form->getControlGroup('published'); ?>
-		  <?php echo $this->form->getControlGroup('publish_up'); ?>
-		  <?php echo $this->form->getControlGroup('publish_down'); ?>
+		  <?php echo $this->form->renderField('published'); ?>
+		  <?php echo $this->form->renderField('publish_up'); ?>
+		  <?php echo $this->form->renderField('publish_down'); ?>
 		<?php endif; ?>
 	      </div>
 
 	      <div class="tab-pane" id="language">
-		<?php echo $this->form->getControlGroup('language'); ?>
+		<?php echo $this->form->renderField('language'); ?>
 	      </div>
 
 	      <div class="tab-pane" id="metadata">
-		<?php echo $this->form->getControlGroup('metadesc'); ?>
-		<?php echo $this->form->getControlGroup('metakey'); ?>
+		<?php echo $this->form->renderField('metadesc'); ?>
+		<?php echo $this->form->renderField('metakey'); ?>
 	      </div>
 	    </div>
 

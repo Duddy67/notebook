@@ -11,6 +11,21 @@ defined('_JEXEC') or die('Restricted access');
 
 class NotebookModelNote extends JModelAdmin
 {
+  /**
+   * The type alias for this content type.
+   *
+   * @var    string
+   * @since  3.2
+   */
+  public $typeAlias = 'com_notebook.note';
+
+  /**
+   * Batch processes supported by NoteBook (over and above the standard batch processes).
+   *
+   * @var array
+   */
+  protected $notebook_batch_commands = array('user_id' => 'batchUser');
+
   // Prefix used with the controller messages.
   protected $text_prefix = 'COM_NOTEBOOK';
 
@@ -133,6 +148,71 @@ class NotebookModelNote extends JModelAdmin
 
     // Hands over to the parent function.
     return parent::saveorder($pks, $order);
+  }
+
+
+  /**
+   * Method to perform batch operations on an item or a set of items.
+   *
+   * @param   array  $commands  An array of commands to perform.
+   * @param   array  $pks       An array of item ids.
+   * @param   array  $contexts  An array of item contexts.
+   *
+   * @return  boolean  Returns true on success, false on failure.
+   *
+   * @since   1.7
+   */
+  public function batch($commands, $pks, $contexts)
+  {
+    // Includes the additional batch processes which the NoteBook component supports.
+    $this->batch_commands = array_merge($this->batch_commands, $this->notebook_batch_commands);
+
+    return parent::batch($commands, $pks, $contexts);
+  }
+
+
+  /**
+   * Batch change a linked user.
+   *
+   * @param   integer  $value     The new value matching a User ID.
+   * @param   array    $pks       An array of row IDs.
+   * @param   array    $contexts  An array of item contexts.
+   *
+   * @return  boolean  True if successful, false otherwise and internal error is set.
+   *
+   * @since   2.5
+   */
+  protected function batchUser($value, $pks, $contexts)
+  {
+    foreach ($pks as $pk)
+    {
+      if ($this->user->authorise('core.edit', $contexts[$pk]))
+      {
+	$this->table->reset();
+	$this->table->load($pk);
+	$this->table->created_by = (int) $value;
+
+	$this->createTagsHelper($this->tagsObserver, $this->type, $pk, $this->typeAlias, $this->table);
+
+	if (!$this->table->store())
+	{
+	  $this->setError($this->table->getError());
+
+	  return false;
+	}
+      }
+      else
+      {
+	$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
+
+	return false;
+      }
+    }
+
+    // Clean the cache
+    $this->cleanCache();
+
+    return true;
   }
 }
 

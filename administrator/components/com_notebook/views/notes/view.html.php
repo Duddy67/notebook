@@ -86,6 +86,18 @@ class NotebookViewNotes extends JViewLegacy
       JToolBarHelper::trash('notes.trash','JTOOLBAR_TRASH');
     }
 
+    // Add a batch button
+    if($user->authorise('core.create', 'com_notebook') && $user->authorise('core.edit', 'com_notebook')
+       && $user->authorise('core.edit.state', 'com_notebook')) {
+      $title = JText::_('JTOOLBAR_BATCH');
+
+      // Instantiate a new JLayoutFile instance and render the batch button
+      $layout = new JLayoutFile('joomla.toolbar.batch');
+
+      $dhtml = $layout->render(array('title' => $title));
+      JToolbar::getInstance('toolbar')->appendButton('Custom', $dhtml, 'batch');
+    }
+
     // Checks for delete permission.
     if($canDo->get('core.delete') || count($user->getAuthorisedCategories('com_notebook', 'core.delete'))) {
       JToolBarHelper::divider();
